@@ -1,0 +1,21 @@
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Python
+backend/venv/
+backend/__pycache__/
+backend/.pytest_cache/
+
+# Environment Variables
+.env
+
+# Python compiled files
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code (optional)
+.vscode/
