@@ -19,3 +19,6 @@ Thumbs.db
 
 # VS Code (optional)
 .vscode/
+
+.env
+backend/.env
