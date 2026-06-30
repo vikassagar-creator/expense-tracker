@@ -5,10 +5,41 @@ function Expenses() {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ title, amount, category, date });
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch(
+      "http://127.0.0.1:8000/expenses/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          amount: parseFloat(amount),
+          category,
+          date,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+
+    alert("Expense added successfully!");
+
+    setTitle("");
+    setAmount("");
+    setCategory("");
+    setDate("");
+  } catch (error) {
+    console.error(error);
+    alert("Failed to add expense");
+  }
+};
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>

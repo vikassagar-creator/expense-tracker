@@ -19,6 +19,25 @@ def create_expense(expense: ExpenseCreate, db: Session = Depends(get_db)):
 def get_expenses(db: Session = Depends(get_db)):
     return db.query(Expense).all()
 
+
+
+@router.get("/expenses/analytics")
+def get_analytics(db: Session = Depends(get_db)):
+    expenses = db.query(Expense).all()
+
+    total = sum(e.amount for e in expenses)
+
+    category_data = {}
+    for e in expenses:
+        category_data[e.category] = category_data.get(e.category, 0) + e.amount
+
+    return {
+        "total": total,
+        "category_breakdown": category_data
+    }
+
+    
+
 @router.get("/expenses/{expense_id}")
 def get_expense(expense_id: int, db: Session = Depends(get_db)):
     expense = db.query(Expense).filter(Expense.id == expense_id).first()
@@ -36,6 +55,7 @@ def delete_expense(expense_id: int, db: Session = Depends(get_db)):
     return {"message": "Expense deleted successfully"}
 
 
+
 @router.put("/expenses/{expense_id}")
 def update_expense(expense_id: int, updated_expense: ExpenseCreate, db: Session = Depends(get_db)):
     expense = db.query(Expense).filter(Expense.id == expense_id).first()
@@ -48,3 +68,4 @@ def update_expense(expense_id: int, updated_expense: ExpenseCreate, db: Session 
     db.commit()
     db.refresh(expense)
     return expense
+
