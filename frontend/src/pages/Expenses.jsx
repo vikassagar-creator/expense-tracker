@@ -5,9 +5,12 @@ function Expenses() {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
+
+
+
   const handleSubmit = async (e) => {
   e.preventDefault();
-
+  const token = localStorage.getItem("token");
   try {
     const response = await fetch(
       "http://127.0.0.1:8000/expenses/",
@@ -15,6 +18,7 @@ function Expenses() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           title,
@@ -28,13 +32,17 @@ function Expenses() {
     const data = await response.json();
 
     console.log(data);
-
-    alert("Expense added successfully!");
+    if (response.ok) {
+      alert("Expense added successfully!");
+    
 
     setTitle("");
     setAmount("");
     setCategory("");
     setDate("");
+    } else { 
+      alert("Failed to add expense: " + data.detail);
+    }
   } catch (error) {
     console.error(error);
     alert("Failed to add expense");

@@ -10,7 +10,14 @@ function Dashboard() {
 
   const fetchAnalytics = async () => {
   try {
-    const res = await fetch("http://127.0.0.1:8000/expenses/analytics");
+    const token = localStorage.getItem("token");
+    const res = await fetch("http://127.0.0.1:8000/expenses/analytics",{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    );
 
     if (!res.ok) {
       console.error("Analytics fetch failed");
@@ -33,8 +40,12 @@ function Dashboard() {
 
   const handleDeleteRow = async (id) => {
     try {
+      const token = localStorage.getItem("token");
       await fetch(`http://127.0.0.1:8000/expenses/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       // Remove the deleted expense from the state
       setExpenses((prev) => prev.filter((expense) => expense.id !== id));
@@ -45,6 +56,7 @@ function Dashboard() {
 
   const handleUpdateExpense = async () => {
     try {
+      const token = localStorage.getItem("token");
       if (!editingExpense.title || !editingExpense.amount) {
         alert("Fields cannot be empty");
         return;
@@ -53,6 +65,10 @@ function Dashboard() {
         `http://127.0.0.1:8000/expenses/${editingExpense.id}`,
         {
           method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
 
           body: JSON.stringify({
             title: editingExpense.title,
@@ -63,6 +79,7 @@ function Dashboard() {
 
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         },
       );
@@ -81,8 +98,12 @@ function Dashboard() {
   };
   const fetchExpenses = async () => {
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch("http://127.0.0.1:8000/expenses/", {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (response.ok) {
         console.log("Expenses fetched successfully");

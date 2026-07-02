@@ -1,14 +1,40 @@
 import React, { useState } from "react";
 import "./Login.css";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
+    console.log(username);
     console.log(password);
+  
+  try {
+    const response = await fetch("http://localhost:8000/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem("token", data.access_token);
+      alert("Login successful!");
+      console.log(data);
+      
+      
+      navigation("/dashboard");
+    } else {
+      alert("Login failed: " + data.detail);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred during login.");
+  }
   };
 
   return (
@@ -17,19 +43,19 @@ function Login() {
       <form onSubmit={handleSubmit}>
       <h4>Login</h4>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
+          <label htmlFor="exampleInputusername1" className="form-label">
+            Username 
           </label>
           <input
-            type="email"
+            type="text"
             className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="exampleInputusername1"
+            aria-describedby="usernameHelp"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+          <div id="usernameHelp" className="form-text">
+            We'll never share your username with anyone else.
           </div>
         </div>
         <div className="mb-3">
@@ -44,16 +70,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
-          </label>
-        </div>
+        
         <button type="submit" className="btn  btn-primary">
           Submit
         </button>

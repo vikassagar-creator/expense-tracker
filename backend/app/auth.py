@@ -6,3 +6,6 @@ def hash_password(password: str) -> str:
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return password_context.verify(plain_password, hashed_password)
 
+def create_access_token(data: dict) -> str:
+    from .jwt_handler import create_access_token
+    return create_access_token(data)

@@ -3,6 +3,7 @@ import  Register  from "./pages/Register";
 import  Expenses  from "./pages/Expenses";
 import  Dashboard  from "./pages/Dashboard";
 import Navbar from "./components/navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,14 +17,25 @@ function App() {
    
   <Router>
     
-    <Navbar />
+    
     <h1>Expense Tracker</h1>
+    <Navbar />
     <Routes>
+      
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/expenses" element={<Expenses />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/expenses" element={
+        <ProtectedRoute>
+          <Expenses />
+        </ProtectedRoute>
+      } />
+      <Route path="/dashboard" element={
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      } />
     </Routes>
+    
   </Router>
   </>
   )
