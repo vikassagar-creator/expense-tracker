@@ -1,4 +1,4 @@
-const Base_URL = "http://localhost:8000";
+const Base_URL = import.meta.env.VITE_API_URL;
 function getHeaders() {
   return {
     headers: {

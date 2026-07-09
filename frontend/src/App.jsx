@@ -2,7 +2,7 @@ import Login from "./pages/Login";
 import  Register  from "./pages/Register";
 import  Expenses  from "./pages/Expenses";
 import  Dashboard  from "./pages/Dashboard";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import {
   BrowserRouter as Router,

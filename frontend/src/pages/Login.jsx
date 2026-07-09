@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
   const navigation = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,7 +14,7 @@ function Login() {
     console.log(password);
   
   try {
-    const response = await fetch("http://localhost:8000/users/login", {
+    const response = await fetch(`${API_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
