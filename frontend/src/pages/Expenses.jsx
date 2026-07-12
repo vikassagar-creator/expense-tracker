@@ -13,7 +13,7 @@ function Expenses() {
   const token = localStorage.getItem("token");
   try {
     const response = await fetch(
-      "http://127.0.0.1:8000/expenses/",
+      "https://expense-tracker-sdx5.onrender.com/expenses/",
       {
         method: "POST",
         headers: {
