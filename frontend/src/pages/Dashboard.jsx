@@ -11,7 +11,7 @@ function Dashboard() {
   const fetchAnalytics = async () => {
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://127.0.0.1:8000/expenses/analytics",{
+    const res = await fetch("https://expense-tracker-sdx5.onrender.com/expenses/analytics",{
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -41,7 +41,7 @@ function Dashboard() {
   const handleDeleteRow = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await fetch(`http://127.0.0.1:8000/expenses/${id}`, {
+      await fetch(`https://expense-tracker-sdx5.onrender.com/expenses/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ function Dashboard() {
         return;
       }
       const response = await fetch(
-        `http://127.0.0.1:8000/expenses/${editingExpense.id}`,
+        `https://expense-tracker-sdx5.onrender.com/expenses/${editingExpense.id}`,
         {
           method: "PUT",
           headers: {
@@ -77,10 +77,7 @@ function Dashboard() {
             date: editingExpense.date,
           }),
 
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+          
         },
       );
 
@@ -99,7 +96,7 @@ function Dashboard() {
   const fetchExpenses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://127.0.0.1:8000/expenses/", {
+      const response = await fetch("https://expense-tracker-sdx5.onrender.com/expenses", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
