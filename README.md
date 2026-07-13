@@ -24,7 +24,7 @@
 # 🌐 Live Demo
 
 🚀 **Frontend:**  
-https://expense-tracker-nine-psi-72.vercel.app/dashboard
+https://expense-tracker-demonic1.vercel.app
 
 ⚙️ **Backend API:**  
 https://expense-tracker-sdx5.onrender.com
