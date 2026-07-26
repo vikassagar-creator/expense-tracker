@@ -386,7 +386,7 @@ Building this project helped me gain practical experience in:
 
 # 📸 Screenshots
 
-_Add screenshots of the application dashboard, login page, and expense management pages here._
+_Adding screenshots of the application dashboard, login page, and expense management pages here._
 
 ---
 
