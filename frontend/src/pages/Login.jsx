@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -12,40 +13,40 @@ function Login() {
     e.preventDefault();
     console.log(username);
     console.log(password);
-  
-  try {
-    const response = await fetch(`${API_URL}/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password })
-    });
-    const data = await response.json();
-    if (response.ok) {
-      localStorage.setItem("token", data.access_token);
-      alert("Login successful!");
-      console.log(data);
-      
-      
-      navigation("/dashboard");
-    } else {
-      alert("Login failed: " + data.detail);
+
+    try {
+      const response = await fetch(`${API_URL}/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem("token", data.access_token);
+        toast.success("Login successful!", {
+          className: "success-toast",
+        });
+        console.log(data);
+
+        navigation("/dashboard");
+      } else {
+        toast.error("Login failed: " + data.detail);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("An error occurred during login.");
     }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("An error occurred during login.");
-  }
   };
 
   return (
     <div className="login-container">
-      
       <form onSubmit={handleSubmit}>
-      <h4>Login</h4>
+        <h4>Login</h4>
         <div className="mb-3">
           <label htmlFor="exampleInputusername1" className="form-label">
-            Username 
+            Username
           </label>
           <input
             type="text"
@@ -71,7 +72,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        
+
         <button type="submit" className="btn  btn-primary">
           Submit
         </button>

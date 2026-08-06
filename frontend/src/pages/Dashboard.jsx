@@ -9,33 +9,33 @@ function Dashboard() {
   const [analytics, setAnalytics] = useState(null);
 
   const fetchAnalytics = async () => {
-  try {
-    const token = localStorage.getItem("token");
-    const res = await fetch("https://expense-tracker-sdx5.onrender.com/expenses/analytics",{
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("https://expense-tracker-sdx5.onrender.com/expenses/analytics", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+
+      );
+
+      if (!res.ok) {
+        console.error("Analytics fetch failed");
+        return;
+      }
+
+      const data = await res.json();
+      setAnalytics(data);
+    } catch (err) {
+      console.error(err);
     }
-
-    );
-
-    if (!res.ok) {
-      console.error("Analytics fetch failed");
-      return;
-    }
-
-    const data = await res.json();
-    setAnalytics(data);
-  } catch (err) {
-    console.error(err);
-  }
-};
+  };
 
   const chartData = analytics?.category_breakdown
     ? Object.entries(analytics.category_breakdown).map(([name, value]) => ({
-        name,
-        value,
-      }))
+      name,
+      value,
+    }))
     : [];
 
   const handleDeleteRow = async (id) => {
@@ -57,8 +57,13 @@ function Dashboard() {
   const handleUpdateExpense = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!editingExpense.title || !editingExpense.amount) {
-        alert("Fields cannot be empty");
+      if (!editingExpense.title.trim()) {
+        toast.error("Title is required");
+        return;
+      }
+
+      if (!editingExpense.amount || Number(editingExpense.amount) <= 0) {
+        toast.error("Enter a valid amount");
         return;
       }
       const response = await fetch(
@@ -77,7 +82,7 @@ function Dashboard() {
             date: editingExpense.date,
           }),
 
-          
+
         },
       );
 
