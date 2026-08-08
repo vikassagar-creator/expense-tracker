@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
+  
 }
 
 .sidebar-header h2 {
@@ -15,6 +16,7 @@
 
 .sidebar-nav {
   flex: 1;
+  overflow-y: auto;
 }
 
 .sidebar-nav h4 {
@@ -25,11 +27,20 @@
 }
 
 .sidebar-nav a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   padding: 0.75rem 1rem;
   border-radius: 8px;
   color: var(--text);
   transition: 0.2s;
+  text-decoration: none;
+}
+
+.sidebar-nav a svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .sidebar-nav a:hover {
@@ -41,14 +52,35 @@
   color: white;
 }
 
+.sidebar-nav a:focus-visible,
+.btn-logout:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .sidebar-footer {
   margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
 }
 
 .btn-logout {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 0.75rem;
   border-radius: 8px;
-  border: none;
+  border: 1px solid #fecaca; /* Soft red border */
+  background: #fff1f2;       /* Very light soft red background */
+  color: #b91c1c;            /* Dark red text for high contrast */
+  font-weight: 500;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-logout:hover {
+  background: #fee2e2;       /* Slightly deeper light red on hover */
+  color: #991b1b;
 }

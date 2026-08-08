@@ -1,12 +1,17 @@
-// layouts/AppLayout.jsx
+import { Outlet } from "react-router-dom";
 import Sidebar from "../components/dashboard/Sidebar";
+import "../styles/layout.css";
 
-function AppLayout({ children }) {
+function AppLayout() {
     return (
         <div className="app-shell">
             <Sidebar />
-            <div className="app-content">{children}</div>
+
+            <main className="app-content">
+                <Outlet />
+            </main>
         </div>
     );
 }
+
 export default AppLayout;

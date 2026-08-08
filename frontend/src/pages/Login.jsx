@@ -41,9 +41,12 @@ function Login() {
   };
 
   return (
+    <>
+    <h3>ExpenseTracker</h3>
     <div className="login-container">
       <form onSubmit={handleSubmit}>
-        <h4>Login</h4>
+        <h4>Welcome Back!</h4>
+        <p>Sign in to continue managing your expenses.</p>
         <div className="mb-3">
           <label htmlFor="exampleInputusername1" className="form-label">
             Username
@@ -56,9 +59,7 @@ function Login() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <div id="usernameHelp" className="form-text">
-            We'll never share your username with anyone else.
-          </div>
+          
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">
@@ -74,10 +75,12 @@ function Login() {
         </div>
 
         <button type="submit" className="btn  btn-primary">
-          Submit
+          Sign in
         </button>
+        <p>Don't have an account? <a href="/register">Register here</a></p>
       </form>
     </div>
+    </>
   );
 }
 export default Login;

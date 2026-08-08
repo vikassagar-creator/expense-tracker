@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import { FaSignOutAlt } from "react-icons/fa";
 function Navbar() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token"); // Check if user is logged in
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        navigate("/login");
+        navigate("/");
     };
 
     return (
@@ -20,18 +20,35 @@ function Navbar() {
                     </div>
                     <nav className="nav-links">
                         <ul>
-                            <li><a href="#features">Features</a></li>
-                            <li><a href="#tech-stack">Tech Stack</a></li>
-                            
+                            <li>
+                                <a href="#features">Features</a>
+                            </li>
+                            <li>
+                                <a href="#tech-stack">Tech Stack</a>
+                            </li>
+
                             {token ? (
                                 <>
-                                    <li><Link to="/dashboard">Dashboard</Link></li>
-                                    <li><button onClick={handleLogout} className="btn-logout">Logout</button></li>
+                                    <li>
+                                        <Link to="/dashboard">Dashboard</Link>
+                                    </li>
+                                    <li>
+                                        <button onClick={handleLogout} className="btn-logout">
+                                            <FaSignOutAlt />
+                                            Logout
+                                        </button>
+                                    </li>
                                 </>
                             ) : (
                                 <>
-                                    <li><Link to="/login">Login</Link></li>
-                                    <li><Link to="/register" className="btn-primary">Get Started</Link></li>
+                                    <li>
+                                        <Link to="/login">Login</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/register" className="btn-primary">
+                                            Get Started
+                                        </Link>
+                                    </li>
                                 </>
                             )}
                         </ul>

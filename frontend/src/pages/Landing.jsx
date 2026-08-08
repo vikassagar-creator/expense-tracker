@@ -12,10 +12,12 @@ function LandingPage() {
 
         <>
             <Navbar />
-            <Hero />
-            <Features />
-            <TechStack />
-            <CTA />
+            
+                <Hero />
+                <Features />
+                <TechStack />
+                <CTA />
+            
             <Footer />
         </>
     );

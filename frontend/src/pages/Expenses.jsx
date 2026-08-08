@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Expenses.css";
 import { toast } from "react-hot-toast";
+import App from "../App";
+import AppLayout from "../layouts/AppLayout";
 function Expenses() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -50,6 +52,7 @@ function Expenses() {
   }
 };
   return (
+    
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h4>Expenses</h4>
@@ -105,6 +108,7 @@ function Expenses() {
         </div>
       </form>
     </div>
+    
   );
 }
 

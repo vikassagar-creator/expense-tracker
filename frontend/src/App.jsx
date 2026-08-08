@@ -1,76 +1,52 @@
-import Login from "./pages/Login";
-import  Register  from "./pages/Register";
-import  Expenses  from "./pages/Expenses";
-import  Dashboard  from "./pages/Dashboard";
-import Navbar from "./components/common/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { Toaster } from  "react-hot-toast";
+import { Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
 import LandingPage from "./pages/Landing";
-import { Link } from "react-router-dom";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  
-} from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+import Dashboard from "./pages/Dashboard";
+import Expenses from "./pages/Expenses";
+import Budget from "./pages/Budget";
+import Reports from "./pages/Reports";
+import Analytics from "./pages/Analytics";
+import Categories from "./pages/Categories";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import Help from "./pages/Help";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import AppLayout from "./layouts/AppLayout";
+
 function App() {
-  return(
-  <> 
- <Toaster
-  position="top-right"
-  toastOptions={{
-    duration: 3000,
-    style: {
-      background: "#1E293B",
-      color: "#fff",
-      borderRadius: "14px",
-      padding: "14px 18px",
-      fontFamily: "Inter, sans-serif",
-      fontWeight: 500,
-      boxShadow: "0 12px 30px rgba(0,0,0,.25)",
-      border: "1px solid rgba(255,255,255,.08)",
-    },
-    success: {
-      iconTheme: {
-        primary: "#10B981",
-        secondary: "#fff",
-      },
-    },
-    error: {
-      iconTheme: {
-        primary: "#EF4444",
-        secondary: "#fff",
-      },
-    },
-  }}
-/>
-   
-  <Router>
-    
-    
-    <Link to="/" className="logo-link">
-                                <span>Expense Tracker</span>
-                            </Link>
-    <Navbar />
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/expenses" element={
-        <ProtectedRoute>
-          <Expenses />
-        </ProtectedRoute>
-      } />
-      <Route path="/dashboard" element={
-        <ProtectedRoute>
-          <Dashboard />
-        </ProtectedRoute>
-      } />
-    </Routes>
-    
-  </Router>
-  </>
-  )
+  return (
+    <>
+      <Toaster />
+
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route element={
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        }
+        >
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/budget" element={<Budget />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/help" element={<Help />} />
+        </Route>
+      </Routes>
+    </>
+  );
 }
 
 export default App;

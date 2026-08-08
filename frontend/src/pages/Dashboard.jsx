@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import AppLayout from "../layouts/AppLayout";
+import { toast } from "react-hot-toast";
 
 function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -124,6 +126,7 @@ function Dashboard() {
   }, []);
 
   return (
+    
     <>
       <h1>Dashboard Page</h1>
       {showModal && editingExpense && (
@@ -274,6 +277,7 @@ function Dashboard() {
         <Tooltip />
       </PieChart>
     </>
+  
   );
 }
 
