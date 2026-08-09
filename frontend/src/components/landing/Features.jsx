@@ -44,21 +44,21 @@ const features = [
 
 function Features() {
     return (
-       <section id="features">
-  <h2>Features</h2>
-  <p>Discover the powerful features of our expense tracker.</p>
+        <section id="features">
+            <h2>Features</h2>
+            <p>Discover the powerful features of our expense tracker.</p>
 
-  <div className="feature-grid">
-    {features.map((feature) => (
-      <Card
-        key={feature.title}
-        icon={feature.icon}
-        title={feature.title}
-        description={feature.description}
-      />
-    ))}
-  </div>
-</section>
+            <div className="feature-grid">
+                {features.map((feature) => (
+                    <Card
+                        key={feature.title}
+                        icon={feature.icon}
+                        title={feature.title}
+                        description={feature.description}
+                    />
+                ))}
+            </div>
+        </section>
     );
 }
 export default Features;

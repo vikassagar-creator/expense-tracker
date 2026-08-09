@@ -1,7 +1,70 @@
 :root {
-  --primary: #2563EB;
-  --background: #F8FAFC;
-  --text: #1E293B;
-  --muted: #64748B;
-  --border: #E2E8F0;
+  /* ==============================
+     Colors
+  ============================== */
+
+  --primary: #1f4d3a;
+  --primary-dark: #16382b;
+  --primary-light: #e8f0eb;
+
+  --accent: #d97757;
+  --accent-dark: #bd6043;
+
+  --highlight: #e7b86a;
+
+  --bg: #f7f4ed;
+  --surface: #fffdf8;
+  --surface-alt: #f1ede4;
+
+  --text: #1f2933;
+  --muted: #667085;
+
+  --border: #ded9cf;
+
+  --success: #3f7d5c;
+  --danger: #c94c4c;
+  --warning: #c58a28;
+
+  /* ==============================
+     Typography
+  ============================== */
+
+  --font-body: "Inter", sans-serif;
+  --font-display: "Playfair Display", serif;
+
+  /* ==============================
+     Layout
+  ============================== */
+
+  --max-width: 1200px;
+
+  /* ==============================
+     Border Radius
+  ============================== */
+
+  --radius-sm: 8px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* ==============================
+     Shadows
+  ============================== */
+
+  --shadow-sm: 0 2px 8px rgba(31, 41, 51, 0.06);
+
+  --shadow-md:
+    0 8px 24px rgba(31, 41, 51, 0.08);
+
+  --shadow-lg:
+    0 16px 40px rgba(31, 41, 51, 0.12);
+
+  /* ==============================
+     Transitions
+  ============================== */
+
+  --transition-fast: 0.15s ease;
+
+  --transition:
+    0.25s ease;
 }

@@ -1,0 +1,28 @@
+#cta {
+    
+    padding: 50px 20px;
+    background-color: #f8f9fa;
+}
+
+.cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.cta p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    gap: 1rem;
+}
+
+.btn-cta{
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    
+
+}
