@@ -10,22 +10,22 @@ import {
 } from "react-icons/si";
 
 const techStack = [
-  
   {
+
     category: "Frontend",
     technologies: [
       {
-        icon: <FaReact />,
+        icon: FaReact,
         title: "React",
         description: "Component-based UI library.",
       },
       {
-        icon: <SiVite />,
+        icon: SiVite,
         title: "Vite",
         description: "Fast development and build tool.",
       },
       {
-        icon: <FaCss3Alt />,
+        icon: FaCss3Alt,
         title: "CSS3",
         description: "Responsive styling and layouts.",
       },
@@ -35,17 +35,17 @@ const techStack = [
     category: "Backend",
     technologies: [
       {
-        icon: <FaPython />,
+        icon: FaPython ,
         title: "Python",
         description: "Application logic.",
       },
       {
-        icon: <SiFastapi />,
+        icon: SiFastapi ,
         title: "FastAPI",
         description: "REST API framework.",
       },
       {
-        icon: <FaKey />,
+        icon:FaKey ,
         title: "JWT",
         description: "Secure authentication.",
       },
@@ -55,12 +55,12 @@ const techStack = [
     category: "Database",
     technologies: [
       {
-        icon: <SiPostgresql />,
+        icon: SiPostgresql ,
         title: "PostgreSQL",
         description: "Relational database.",
       },
       {
-        icon: <SiSqlalchemy />,
+        icon: SiSqlalchemy ,
         title: "SQLAlchemy",
         description: "Python ORM.",
       },
@@ -70,12 +70,12 @@ const techStack = [
     category: "Tools",
     technologies: [
       {
-        icon: <FaGitAlt />,
+        icon: FaGitAlt ,
         title: "Git",
         description: "Version control.",
       },
       {
-        icon: <FaGithub />,
+        icon: FaGithub ,
         title: "GitHub",
         description: "Code hosting and collaboration.",
       },

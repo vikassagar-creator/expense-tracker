@@ -1,5 +1,5 @@
 import Card from "../common/Card";
-import "../../styles/globals.css";
+
 import {
     FaChartPie,
     FaWallet,
@@ -8,45 +8,68 @@ import {
     FaHistory,
     FaMobileAlt,
 } from "react-icons/fa";
+
+import "./Features.css";
+
 const features = [
     {
-        icon: <FaChartPie />,
-        title: "Analytics Dashboard",
-        description: "Visualize expenses with interactive charts and insights.",
+        icon: FaChartPie,
+        title: "Smart Analytics",
+        description:
+            "Visualize your spending with interactive charts and useful insights.",
     },
     {
-        icon: <FaWallet />,
+        icon: FaWallet,
         title: "Budget Management",
-        description: "Set budgets and monitor your spending progress.",
+        description:
+            "Set spending limits and monitor your progress throughout the month.",
     },
     {
-        icon: <FaReceipt />,
+        icon: FaReceipt,
         title: "Expense Tracking",
-        description: "Record and organize your daily expenses.",
+        description:
+            "Record, organize, and manage your daily expenses with ease.",
     },
     {
-        icon: <FaLock />,
+        icon: FaLock,
         title: "Secure Authentication",
-        description: "JWT-based authentication protects your account.",
+        description:
+            "JWT-based authentication helps keep your account and data protected.",
     },
     {
-        icon: <FaHistory />,
+        icon: FaHistory,
         title: "Transaction History",
-        description: "Browse and search your previous expenses.",
+        description:
+            "Review your previous expenses and transactions in one place.",
     },
     {
-        icon: <FaMobileAlt />,
+        icon: FaMobileAlt,
         title: "Responsive Design",
-        description: "Optimized for desktop, tablet, and mobile.",
+        description:
+            "Access and manage your expenses comfortably across desktop and mobile.",
     },
 ];
 
-
 function Features() {
     return (
-        <section id="features">
-            <h2>Features</h2>
-            <p>Discover the powerful features of our expense tracker.</p>
+        <section id="features" className="features">
+
+            <div className="features-header">
+                <span className="section-eyebrow">
+                    FEATURES
+                </span>
+
+                <h2>
+                    Everything you need to
+                    <span> understand your spending.</span>
+                </h2>
+
+                <p>
+                    Track, analyze, and manage your expenses with
+                    simple tools designed to give you better control
+                    over your finances.
+                </p>
+            </div>
 
             <div className="feature-grid">
                 {features.map((feature) => (
@@ -58,7 +81,9 @@ function Features() {
                     />
                 ))}
             </div>
+
         </section>
     );
 }
+
 export default Features;
