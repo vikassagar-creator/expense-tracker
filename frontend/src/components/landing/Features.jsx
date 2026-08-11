@@ -14,7 +14,7 @@ import "./Features.css";
 const features = [
     {
         icon: FaChartPie,
-        title: "Smart Analytics",
+        title: "Expense Analytics",
         description:
             "Visualize your spending with interactive charts and useful insights.",
     },

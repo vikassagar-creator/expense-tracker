@@ -1,0 +1,218 @@
+/* =========================
+   TECH STACK
+========================= */
+
+.tech-stack {
+    padding: 6rem 0;
+
+    background: var(--surface);
+}
+
+.tech-stack-header {
+    width: min(calc(100% - 48px), 760px);
+
+    margin: 0 auto 3.5rem;
+
+    text-align: center;
+}
+
+
+/* Eyebrow */
+
+.section-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 1rem;
+
+    color: var(--accent);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+}
+
+
+/* Heading */
+
+.tech-stack-header h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: clamp(2rem, 4vw, 3.2rem);
+
+    line-height: 1.15;
+
+    letter-spacing: -0.03em;
+}
+
+.tech-stack-header h2 span {
+    color: var(--primary);
+}
+
+
+/* Description */
+
+.tech-stack-header p {
+    max-width: 600px;
+
+    margin: 1.25rem auto 0;
+
+    color: var(--muted);
+
+    font-size: 1rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   CATEGORIES
+========================= */
+
+.tech-categories {
+    width: min(calc(100% - 48px), 1100px);
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2rem;
+}
+
+.tech-category h3 {
+    margin: 0 0 1rem;
+
+    color: var(--text);
+
+    font-size: 0.8rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.12em;
+}
+
+
+/* =========================
+   TECHNOLOGY GRID
+========================= */
+
+.tech-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 1rem;
+}
+
+
+/* =========================
+   TECHNOLOGY ITEM
+========================= */
+
+.tech-item {
+    min-height: 100px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 0.65rem;
+
+    padding: 1.25rem;
+
+    background: var(--card-bg);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    color: var(--text);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.tech-item:hover {
+    transform: translateY(-4px);
+
+    border-color: var(--primary);
+
+    box-shadow: 0 10px 25px rgba(31, 77, 58, 0.08);
+}
+
+
+/* Icon */
+
+.tech-icon {
+    font-size: 2rem;
+
+    color: var(--primary);
+}
+
+
+/* Name */
+
+.tech-item span {
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .tech-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .tech-stack {
+        padding: 4.5rem 0;
+    }
+
+    .tech-stack-header {
+        width: min(calc(100% - 32px), 600px);
+    }
+
+    .tech-categories {
+        width: min(calc(100% - 32px), 600px);
+
+        gap: 2.5rem;
+    }
+
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 400px) {
+
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
