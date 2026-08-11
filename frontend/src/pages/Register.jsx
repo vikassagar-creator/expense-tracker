@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { toast } from "react-hot-toast";
 function Register() {
   const navigation = useNavigate();
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-    alert("Passwords do not match!");
+    toast.error("Passwords do not match!");
     return;
   }
   try{
@@ -27,7 +28,9 @@ function Register() {
     });
   const data =await response.json();
   if (response.ok) {
-    alert("Registration successful!");
+    toast.success("Registration successful!", {
+      className: "success-toast",
+    });
     console.log(data);
     navigate("/"); // Redirect to login page after successful registration
     //clear form fields
@@ -36,11 +39,11 @@ function Register() {
     setPassword("");
     setConfirmPassword("");
   } else {
-    alert("Registration failed: " + data.detail);
+    toast.error("Registration failed: " + data.detail);
   }}
   catch (error) {
     console.error("Error:", error);
-    alert("An error occurred during registration.");
+    toast.error("An error occurred during registration.");
   }
 }
 

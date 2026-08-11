@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./Expenses.css";
+import { toast } from "react-hot-toast";
+import App from "../App";
+import AppLayout from "../layouts/AppLayout";
 function Expenses() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -33,7 +36,7 @@ function Expenses() {
 
     console.log(data);
     if (response.ok) {
-      alert("Expense added successfully!");
+      toast.success("Expense added successfully!");
     
 
     setTitle("");
@@ -41,14 +44,15 @@ function Expenses() {
     setCategory("");
     setDate("");
     } else { 
-      alert("Failed to add expense: " + data.detail);
+      toast.error("Failed to add expense: " + data.detail);
     }
   } catch (error) {
     console.error(error);
-    alert("Failed to add expense");
+    toast.error("Failed to add expense");
   }
 };
   return (
+    
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h4>Expenses</h4>
@@ -104,6 +108,7 @@ function Expenses() {
         </div>
       </form>
     </div>
+    
   );
 }
 

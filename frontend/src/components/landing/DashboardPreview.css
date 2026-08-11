@@ -1,0 +1,543 @@
+.dashboard-section {
+    padding: 7rem 0;
+
+    background: var(--bg);
+
+    overflow: hidden;
+}
+
+
+.dashboard-section-header {
+    width: min(
+        calc(100% - 48px),
+        760px
+    );
+
+    margin: 0 auto 4rem;
+
+    text-align: center;
+}
+
+
+.dashboard-section-header h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: clamp(
+        2rem,
+        4vw,
+        3.2rem
+    );
+
+    line-height: 1.15;
+
+    letter-spacing: -0.03em;
+}
+
+
+.dashboard-section-header h2 span {
+    color: var(--primary);
+}
+
+
+.dashboard-section-header p {
+    max-width: 600px;
+
+    margin: 1.25rem auto 0;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   DASHBOARD SHOWCASE
+========================================= */
+
+.dashboard-showcase {
+    width: min(
+        calc(100% - 32px),
+        1200px
+    );
+
+    margin: 0 auto;
+}
+
+
+.dashboard-window {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 70px rgba(31, 77, 58, 0.12);
+}
+
+
+/* =========================================
+   WINDOW HEADER
+========================================= */
+
+.window-header {
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    border-bottom: 1px solid var(--border);
+
+    background: var(--surface);
+}
+
+
+.window-dots {
+    position: absolute;
+
+    left: 1rem;
+
+    display: flex;
+
+    gap: 6px;
+}
+
+
+.window-dots span {
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--border);
+}
+
+
+.window-title {
+    color: var(--muted);
+
+    font-size: 0.7rem;
+
+    font-weight: 500;
+}
+
+
+/* =========================================
+   WINDOW CONTENT
+========================================= */
+
+.window-content {
+    display: grid;
+
+    grid-template-columns: 180px 1fr;
+
+    min-height: 520px;
+}
+
+
+/* =========================================
+   MOCK SIDEBAR
+========================================= */
+
+.mock-sidebar {
+    padding: 1.5rem 1rem;
+
+    background: var(--surface);
+
+    border-right: 1px solid var(--border);
+}
+
+
+.mock-logo {
+    margin-bottom: 2rem;
+
+    padding: 0 0.5rem;
+
+    color: var(--primary);
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+}
+
+
+.mock-nav {
+    padding: 0.65rem 0.75rem;
+
+    margin-bottom: 0.35rem;
+
+    border-radius: 8px;
+
+    color: var(--muted);
+
+    font-size: 0.75rem;
+}
+
+
+.mock-nav.active {
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   MOCK MAIN
+========================================= */
+
+.mock-main {
+    padding: 1.75rem;
+
+    background: var(--bg);
+}
+
+
+.mock-topbar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 1.5rem;
+}
+
+
+.mock-muted {
+    display: block;
+
+    margin-bottom: 0.25rem;
+
+    color: var(--muted);
+
+    font-size: 0.65rem;
+}
+
+
+.mock-topbar h3 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 1.1rem;
+}
+
+
+.mock-date {
+    padding: 0.45rem 0.7rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+
+    color: var(--muted);
+
+    font-size: 0.65rem;
+}
+
+
+/* =========================================
+   MOCK STATS
+========================================= */
+
+.mock-stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 0.75rem;
+
+    margin-bottom: 0.75rem;
+}
+
+
+.mock-stat {
+    padding: 1rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+}
+
+
+.mock-stat span {
+    display: block;
+
+    margin-bottom: 0.4rem;
+
+    color: var(--muted);
+
+    font-size: 0.65rem;
+}
+
+
+.mock-stat strong {
+    color: var(--text);
+
+    font-size: 1rem;
+}
+
+
+/* =========================================
+   CHART / CATEGORY
+========================================= */
+
+.mock-grid {
+    display: grid;
+
+    grid-template-columns: 1.7fr 1fr;
+
+    gap: 0.75rem;
+
+    margin-bottom: 0.75rem;
+}
+
+
+.mock-chart-card,
+.mock-category-card,
+.mock-transactions {
+    padding: 1rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+}
+
+
+.mock-card-heading {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 1rem;
+
+    color: var(--text);
+
+    font-size: 0.7rem;
+
+    font-weight: 600;
+}
+
+
+.mock-card-heading span:last-child {
+    color: var(--muted);
+
+    font-size: 0.6rem;
+}
+
+
+/* =========================================
+   FAKE CHART
+========================================= */
+
+.mock-chart {
+    height: 150px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 6%;
+
+    padding: 0 0.5rem;
+}
+
+
+.mock-chart-line {
+    width: 12%;
+
+    background: var(--primary);
+
+    border-radius: 5px 5px 2px 2px;
+
+    opacity: 0.85;
+}
+
+
+.line-1 {
+    height: 35%;
+}
+
+.line-2 {
+    height: 55%;
+}
+
+.line-3 {
+    height: 42%;
+}
+
+.line-4 {
+    height: 72%;
+}
+
+.line-5 {
+    height: 58%;
+}
+
+
+/* =========================================
+   CATEGORIES
+========================================= */
+
+.mock-category {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0.65rem 0;
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 0.65rem;
+}
+
+
+.mock-category:last-child {
+    border-bottom: none;
+}
+
+
+.mock-category span {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.45rem;
+}
+
+
+.mock-category strong {
+    color: var(--text);
+
+    font-size: 0.65rem;
+}
+
+
+.category-dot {
+    width: 7px;
+
+    height: 7px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+}
+
+
+.food {
+    background: var(--primary);
+}
+
+
+.transport {
+    background: var(--accent);
+}
+
+
+.shopping {
+    background: var(--highlight);
+}
+
+
+/* =========================================
+   TRANSACTIONS
+========================================= */
+
+.mock-transaction {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 0.6rem 0;
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 0.65rem;
+}
+
+
+.mock-transaction:last-child {
+    border-bottom: none;
+}
+
+
+.mock-transaction strong {
+    color: var(--text);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 800px) {
+
+    .dashboard-section {
+        padding: 5rem 0;
+    }
+
+    .window-content {
+        grid-template-columns: 1fr;
+    }
+
+    .mock-sidebar {
+        display: none;
+    }
+
+    .mock-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-section-header,
+    .dashboard-showcase {
+        width: calc(100% - 32px);
+    }
+
+    .dashboard-section-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .mock-main {
+        padding: 1rem;
+    }
+
+    .mock-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .mock-chart {
+        height: 120px;
+    }
+
+    .window-header {
+        height: 36px;
+    }
+}
