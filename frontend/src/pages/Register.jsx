@@ -1,116 +1,139 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import "./Auth.css";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 function Register() {
   const navigation = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-    toast.error("Passwords do not match!");
-    return;
-  }
-  try{
-    const response = await fetch(`${API_URL}/users/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ username, email, password })
-    });
-  const data =await response.json();
-  if (response.ok) {
-    toast.success("Registration successful!", {
-      className: "success-toast",
-    });
-    console.log(data);
-    navigate("/"); // Redirect to login page after successful registration
-    //clear form fields
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-  } else {
-    toast.error("Registration failed: " + data.detail);
-  }}
-  catch (error) {
-    console.error("Error:", error);
-    toast.error("An error occurred during registration.");
-  }
-}
 
-    
- 
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, email, password })
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Registration successful!", {
+          className: "success-toast",
+        });
+        console.log(data);
+        navigation("/login"); // Redirect to landing page after successful registration
+        //clear form fields
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        navigation("/login");
+      } else {
+        toast.error("Registration failed: " + data.detail);
+      }
+    }
+    catch (error) {
+      console.error("Error:", error);
+      toast.error("An error occurred during registration.");
+    }
+    finally {
+      setLoading(false);
+    }
+  }
+
+
+
   return (
-    <div className="register-container">
-      
-      <form onSubmit={handleSubmit}>
-      <h4>Register</h4>
-      <div>
-        <label htmlFor="username">username:</label>
-        <input
-          type="text"
-          className="form-control"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+    <div className="auth-page">
+      <Link to="/" className="auth-logo">
+        Expense Tracker
+      </Link>
+
+      <div className="auth-container">
+        <form onSubmit={handleSubmit}>
+          <h4>Create your account</h4>
+          <p className="auth-subtext">Start tracking your expenses in minutes.</p>
+
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="confirmpassword" className="form-label">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="confirmpassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-        
-        <button type="submit" className="btn btn-success">
-          Register
-        </button>
-      </form>
+
+          <div className="form-group">
+            <label htmlFor="email">
+              Email address
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <span id="emailHelp" className="form-hint">
+              We'll never share your email with anyone else.
+            </span>
+
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmpassword">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmpassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className="btn-auth" disabled={loading}>
+            {loading ? "Creating account..." : "Creating Account"}
+            
+          </button>
+
+          <p className="auth-switch">
+            Already have an account? <Link to="/login">Login here</Link>
+          </p>
+        </form>
+      </div>
     </div>
-  ); 
+  );
 }
 
 export default Register;

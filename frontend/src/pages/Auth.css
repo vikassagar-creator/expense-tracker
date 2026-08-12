@@ -1,0 +1,278 @@
+/* =========================
+   AUTH PAGE
+========================= */
+
+.auth-page {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2rem 1.25rem;
+
+    background: var(--bg);
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.auth-logo {
+    margin-bottom: 0.5rem;
+
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 600;
+
+    color: var(--primary);
+
+    text-decoration: none;
+
+    transition: opacity var(--transition-fast);
+}
+
+.auth-logo:hover {
+    opacity: 0.8;
+}
+
+
+/* =========================
+   AUTH CARD
+========================= */
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+
+    padding: 2.5rem 2.25rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-lg);
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+.auth-container h4 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 1.75rem;
+    font-weight: 700;
+
+    line-height: 1.25;
+}
+
+
+.auth-subtext {
+    margin: 0.6rem 0 2rem;
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color: var(--text);
+
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+.form-group input {
+    width: 100%;
+
+    padding: 0.8rem 0.9rem;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    background: #ffffff;
+
+    color: var(--text);
+
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.form-group input::placeholder {
+    color: #98a2b3;
+}
+
+
+.form-group input:hover {
+    border-color: #b9b2a6;
+}
+
+
+.form-group input:focus {
+    outline: none;
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px rgba(31, 77, 58, 0.12);
+}
+
+
+/* =========================
+   FORM HINT
+========================= */
+
+.form-hint {
+    display: block;
+
+    margin-top: 0.4rem;
+
+    color: var(--muted);
+
+    font-size: 0.76rem;
+}
+
+
+/* =========================
+   AUTH BUTTON
+========================= */
+
+.btn-auth {
+    width: 100%;
+
+    margin-top: 0.5rem;
+
+    padding: 0.8rem 1rem;
+
+    border: none;
+
+    border-radius: var(--radius);
+
+    background: var(--primary);
+
+    color: #ffffff;
+
+    font-family: var(--font-body);
+
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.btn-auth:hover:not(:disabled) {
+    background: var(--primary-dark);
+
+    transform: translateY(-1px);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+.btn-auth:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+
+.btn-auth:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   LOGIN / REGISTER SWITCH
+========================= */
+
+.auth-switch {
+    margin-top: 1.5rem;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+}
+
+
+.auth-switch a {
+    margin-left: 0.25rem;
+
+    color: var(--primary);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.auth-switch a:hover {
+    color: var(--primary-dark);
+
+    text-decoration: underline;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .auth-page {
+        padding: 1.5rem 1rem;
+    }
+
+    .auth-container {
+        padding: 2rem 1.25rem;
+
+        border-radius: var(--radius);
+    }
+
+    .auth-container h4 {
+        font-size: 1.5rem;
+    }
+
+}
