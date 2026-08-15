@@ -1,0 +1,139 @@
+.recent-expenses {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+
+  overflow: hidden;
+}
+
+.recent-expenses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.25rem 1.5rem;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.recent-expenses-header h3 {
+  margin: 0;
+  color: var(--text);
+}
+
+.recent-expenses-header p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.view-all-btn {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.view-all-btn:hover {
+  text-decoration: underline;
+}
+
+.expense-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.expense-table th,
+.expense-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.expense-table th {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.expense-table td {
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.expense-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.expense-table tbody tr:hover {
+  background: var(--surface-alt);
+}
+
+.category-badge {
+  display: inline-block;
+
+  padding: 0.25rem 0.55rem;
+
+  border-radius: 999px;
+
+  background: var(--primary-light);
+  color: var(--primary);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.expense-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.expense-action {
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: var(--radius-sm);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: var(--transition);
+}
+
+.expense-action.edit {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.expense-action.delete {
+  background: #fff1f2;
+  color: #b91c1c;
+}
+
+.expense-action:hover {
+  transform: translateY(-1px);
+}
+
+.expense-empty {
+  padding: 3rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.expense-empty a {
+  color: var(--primary);
+  font-weight: 600;
+}

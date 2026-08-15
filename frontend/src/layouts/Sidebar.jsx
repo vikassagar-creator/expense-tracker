@@ -11,7 +11,7 @@ import {
     LuCircleHelp,
 } from "react-icons/lu";
 import { FaSignOutAlt } from "react-icons/fa";
-import "../../styles/Sidebar.css";
+import "../styles/sidebar.css"
 
 function Sidebar() {
     const navigate = useNavigate();

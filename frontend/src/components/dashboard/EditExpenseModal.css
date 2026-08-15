@@ -1,0 +1,154 @@
+.edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(31, 41, 51, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem;
+
+  z-index: 1000;
+}
+
+.edit-modal {
+  width: 100%;
+  max-width: 500px;
+
+  background: var(--surface);
+
+  border-radius: var(--radius-xl);
+
+  box-shadow: var(--shadow-lg);
+
+  overflow: hidden;
+}
+
+.edit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding: 1.5rem;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.edit-modal-header h2 {
+  margin: 0;
+  color: var(--text);
+}
+
+.edit-modal-header p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.modal-close {
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: var(--surface-alt);
+  color: var(--muted);
+
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.edit-expense-form {
+  padding: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.edit-expense-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.edit-expense-form label {
+  display: block;
+
+  margin-bottom: 0.4rem;
+
+  color: var(--text);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.edit-expense-form input {
+  width: 100%;
+
+  padding: 0.7rem 0.8rem;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  background: white;
+
+  color: var(--text);
+
+  outline: none;
+}
+
+.edit-expense-form input:focus {
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(31, 77, 58, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 0.75rem;
+
+  margin-top: 1.5rem;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 0.7rem 1rem;
+
+  border-radius: var(--radius);
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: transparent;
+
+  border: 1px solid var(--border);
+
+  color: var(--text);
+}
+
+.save-btn {
+  background: var(--primary);
+
+  border: 1px solid var(--primary);
+
+  color: white;
+}
+
+.save-btn:hover {
+  background: var(--primary-dark);
+}

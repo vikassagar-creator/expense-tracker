@@ -2,18 +2,22 @@
    Application Layout
    ========================================= */
 
-.app-shell {
-    display: flex;
+.app-layout {
     min-height: 100vh;
-    width: 100%;
-    background-color: var(--background);
+    display: flex;
+    background: var(--bg);
 }
 
 /* Main content area */
-.app-content {
+.app-main {
     flex: 1;
     min-width: 0;
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-content {
+    flex: 1;
     padding: 2rem;
     overflow-x: hidden;
 }
