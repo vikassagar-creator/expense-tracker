@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
-import "./DashboardHeader";
+import "./DashboardHeader.css";
 
-function DashboardHeader() {
+function DashboardHeader({ onAddExpense }) {
   return (
     <div className="dashboard-header">
       <div>
@@ -10,14 +10,19 @@ function DashboardHeader() {
         <p>Overview of your spending and finances.</p>
       </div>
 
-      <Link to="/expenses">
-        {" "}
-        <button className="add-expense-btn">
-          <FaPlus /> Add Expense
-        </button>
-      </Link>
+      <button
+                className="add-expense-btn"
+                onClick={onAddExpense}
+            >
+                <FaPlus />
+                Add Expense
+            </button>
+      
     </div>
   );
 }
 
 export default DashboardHeader;
+
+
+

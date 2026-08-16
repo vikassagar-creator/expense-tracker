@@ -104,23 +104,25 @@ function EditExpenseModal({
 
                         <div className="form-group">
 
-                            <label htmlFor="category">
-                                Category
-                            </label>
-                            <select
-            
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="">Select Category</option>
-            <option value="Food">Food</option>
-            <option value="Transport">Transport</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Other">Other</option>
-          </select>
+                           <label htmlFor="category">
+  Category
+</label>
 
-                           
+<select
+  id="category"
+  name="category"
+  defaultValue={expense.category || ""}
+  required
+>
+  <option value="">Select Category</option>
+  <option value="Food">Food</option>
+  <option value="Transport">Transport</option>
+  <option value="Entertainment">Entertainment</option>
+  <option value="Shopping">Shopping</option>
+  <option value="Other">Other</option>
+</select>
+
+
 
                         </div>
 

@@ -1,114 +1,286 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Expenses.css";
 import { toast } from "react-hot-toast";
-import App from "../App";
-import AppLayout from "../layouts/AppLayout";
+
+import ExpenseHeader from "../components/expenses/ExpenseHeader";
+import AddExpenseModal from "../components/expenses/AddExpenseModal";
+import ExpenseTable from "../components/expenses/ExpenseTable";
+import ExpensesToolbar from "../components/expenses/ExpenseToolbar";
+import EditExpenseModal from "../components/dashboard/EditExpenseModal"
+
 function Expenses() {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [date, setDate] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const [expenses, setExpenses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Add expense modal
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [savingExpense, setSavingExpense] = useState(false);
+
+  // Edit expense
+  const [editingExpense, setEditingExpense] = useState(null);
+
+  // Filters
+  const [search, setSearch] = useState("");
+  const [filterCategory, setFilterCategory] = useState("All");
 
 
+  // =========================
+  // FETCH EXPENSES
+  // =========================
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
+  const fetchExpenses = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(`${API_URL}/expenses`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        console.error(
+          "Error fetching expenses:",
+          response.status,
+          response.statusText
+        );
+
+        toast.error("Unable to load expenses");
+        return;
+      }
+
+      const data = await response.json();
+
+      const sortedExpenses = [...data].sort(
+  (a, b) => new Date(b.date) - new Date(a.date)
+);
+
+setExpenses(sortedExpenses);
+
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+      toast.error("Unable to load expenses");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ========================
+  // HANDLE SAVE EXPENSE
+  //=========================
+  const handleSaveExpense = async (updatedExpense) => {
   try {
+    const token = localStorage.getItem("token");
+
+    const payload = {
+      title: updatedExpense.title,
+      amount: Number(updatedExpense.amount),
+      category: updatedExpense.category,
+      date: updatedExpense.date,
+    };
+
+    console.log("UPDATE PAYLOAD:", payload);
+
     const response = await fetch(
-      "https://expense-tracker-sdx5.onrender.com/expenses/",
+      `${API_URL}/expenses/${updatedExpense.id}`,
       {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      console.error("UPDATE ERROR:", errorData);
+
+      toast.error(
+        errorData.detail
+          ? JSON.stringify(errorData.detail)
+          : "Failed to update expense"
+      );
+
+      return;
+    }
+
+    toast.success("Expense updated successfully");
+
+    setEditingExpense(null);
+
+    await fetchExpenses();
+
+  } catch (error) {
+    console.error("Update error:", error);
+    toast.error("Something went wrong");
+  }
+};
+
+
+  // =========================
+  // ADD EXPENSE
+  // =========================
+
+  const handleAddExpense = async (expenseData) => {
+    setSavingExpense(true);
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(`${API_URL}/expenses/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          title,
-          amount: parseFloat(amount),
-          category,
-          date,
-        }),
+        body: JSON.stringify(expenseData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+
+        toast.error(data.detail || "Failed to add expense");
+        return;
       }
+
+      toast.success("Expense added successfully");
+
+      setShowAddModal(false);
+
+      // Refresh table
+      await fetchExpenses();
+
+    } catch (error) {
+      console.error("Error adding expense:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setSavingExpense(false);
+    }
+  };
+
+
+  // =========================
+  // EDIT
+  // =========================
+
+  const handleEdit = (expense) => {
+    setEditingExpense(expense);
+  };
+
+
+  // =========================
+  // DELETE
+  // =========================
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this expense?"
     );
 
-    const data = await response.json();
-
-    console.log(data);
-    if (response.ok) {
-      toast.success("Expense added successfully!");
-    
-
-    setTitle("");
-    setAmount("");
-    setCategory("");
-    setDate("");
-    } else { 
-      toast.error("Failed to add expense: " + data.detail);
+    if (!confirmed) {
+      return;
     }
-  } catch (error) {
-    console.error(error);
-    toast.error("Failed to add expense");
-  }
-};
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(`${API_URL}/expenses/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        toast.error("Failed to delete expense");
+        return;
+      }
+
+      toast.success("Expense deleted");
+
+      // Refresh table
+      await fetchExpenses();
+
+    } catch (error) {
+      console.error("Error deleting expense:", error);
+      toast.error("Something went wrong");
+    }
+  };
+
+
+  // =========================
+  // FILTER EXPENSES
+  // =========================
+
+  const filteredExpenses = expenses.filter((expense) => {
+
+    const matchesSearch =
+      expense.title
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+    const matchesCategory =
+      filterCategory === "All" ||
+      expense.category === filterCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
+
+  // =========================
+  // INITIAL LOAD
+  // =========================
+
+  useEffect(() => {
+    fetchExpenses();
+  }, []);
+
+
   return (
-    
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h4>Expenses</h4>
-        <div>
-          <label htmlFor="title mb-3">Title:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="amount mb-3">Amount:</label>
-          <input
-            type="number"
-            className="form-control"
-            id="amount"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-          />
-        </div>
-        <div>
-          <label htmlFor="category mb-3">Category:</label>
-          <select
-            className="form-control"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="">Select Category</option>
-            <option value="Food">Food</option>
-            <option value="Transport">Transport</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="date mb-3">Date:</label>
-          <input
-            type="date"
-            className="form-control"
-            id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-        <div>
-          <button type="submit" className="btn btn-outline-success">
-            Add Expense
-          </button>
-        </div>
-      </form>
+    <div className="expenses-page">
+
+      <ExpenseHeader
+        onAddExpense={() => setShowAddModal(true)}
+      />
+
+      <ExpensesToolbar
+        search={search}
+        onSearchChange={setSearch}
+
+        category={filterCategory}
+        onCategoryChange={setFilterCategory}
+
+        onAddExpense={() => setShowAddModal(true)}
+      />
+
+      <ExpenseTable
+        expenses={filteredExpenses}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        loading={loading}
+      />
+
+      <AddExpenseModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onSave={handleAddExpense}
+        loading={savingExpense}
+      />
+
+      <EditExpenseModal
+      expense={editingExpense}
+      isOpen={Boolean(editingExpense)}
+      onClose={()=>setEditingExpense(null)}
+      onSave={handleSaveExpense}
+      />
+
     </div>
-    
   );
 }
 

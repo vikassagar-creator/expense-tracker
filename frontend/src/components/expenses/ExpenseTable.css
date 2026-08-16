@@ -1,0 +1,322 @@
+.expense-table-card {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  font-family: var(--font-display);
+}
+
+/* Header */
+
+.expense-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.expense-table-header h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.expense-table-header p {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Table wrapper */
+
+.expense-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table */
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+/* Table head */
+
+.expense-table thead {
+  background: var(--background);
+}
+
+.expense-table th {
+  padding: 0.9rem 1.25rem;
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Table rows */
+
+.expense-table tbody tr {
+  border-bottom: 1px solid var(--border);
+transition: background 0.2s ease;
+}
+
+.expense-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.expense-table tbody tr:hover {
+  background: var(--background);
+}
+
+/* Table cells */
+
+.expense-table td {
+  padding: 1rem 1.25rem;
+    color: var(--text);
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+/* Expense title */
+
+.expense-title {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Category */
+
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.3rem 0.65rem;
+
+  border-radius: 999px;
+
+  background: var(--background);
+  border: 1px solid var(--border);
+
+  color: var(--text);
+
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Amount */
+
+.expense-amount {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Date */
+
+.expense-date {
+  color: var(--muted);
+}
+
+/* Actions */
+
+.expense-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Edit / Delete buttons */
+
+.expense-action {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.expense-action.edit {
+  background: var(--background);
+  color: var(--primary);
+}
+
+.expense-action.edit:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.expense-action.delete {
+  background: var(--background);
+  color: #dc2626;
+}
+
+.expense-action.delete:hover {
+  background: #dc2626;
+  color: white;
+}
+
+/* Empty state */
+
+.expense-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 180px;
+
+  padding: 2rem;
+
+  text-align: center;
+}
+
+.expense-empty p {
+  margin: 0;
+
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Loading */
+
+.expense-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 180px;
+
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+  .expense-table-header {
+    padding: 1rem;
+  }
+
+  .expense-table th,
+  .expense-table td {
+    padding: 0.8rem 1rem;
+  }
+}
+
+/* =========================
+   TABLE FOOTER
+========================= */
+
+.expense-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1rem 1.25rem;
+
+  border-top: 1px solid var(--border);
+}
+
+.expense-count {
+  margin: 0;
+
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.expense-count strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Every pagination button */
+
+.pagination-btn {
+  min-width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 0.6rem;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Hover */
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--background);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Active page */
+
+.pagination-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* Disabled previous/next */
+
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .expense-table-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .pagination {
+    width: 100%;
+    justify-content: center;
+  }
+}

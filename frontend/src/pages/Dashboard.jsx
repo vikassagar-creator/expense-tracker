@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import { toast } from "react-hot-toast";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
+import AddExpenseModal from "../components/expenses/AddExpenseModal";
+
 import SummaryCards from "../components/dashboard/SummaryCards";
 import SpendingCharts from "../components/dashboard/SpendingCharts";
 import RecentExpenses from "../components/dashboard/RecentExpenses";
@@ -14,6 +16,8 @@ function Dashboard() {
   const [analytics, setAnalytics] = useState(null);
   
   const [loading, setLoading] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [savingExpense, setSavingExpense] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
   console.log("API URL:", API_URL);
 
@@ -228,6 +232,30 @@ const handleSaveExpense = async (updatedExpense) => {
     toast.error("Something went wrong");
   }
 };
+
+const handleAddExpense = async (expenseData) => {
+  setSavingExpense(true);
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/expenses/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(expenseData),
+    });
+    if (!response.ok) throw new Error("Failed to add expense");
+    toast.success("Expense added");
+    setShowAddModal(false);
+    fetchExpenses(); // your existing refetch function
+  } catch (err) {
+    toast.error("Something went wrong");
+  } finally {
+    setSavingExpense(false);
+  }
+};
+
   useEffect(() => {
     refreshDashboard();
 
@@ -236,7 +264,7 @@ const handleSaveExpense = async (updatedExpense) => {
   return (
         <div className="dashboard">
 
-            <DashboardHeader />
+            <DashboardHeader onAddExpense={() => setShowAddModal(true)} />
 
             <SummaryCards
                 analytics={analytics}
@@ -260,6 +288,14 @@ const handleSaveExpense = async (updatedExpense) => {
       onClose={handleCloseModal}
       onSave={handleSaveExpense}
     />
+
+    <AddExpenseModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onSave={handleAddExpense}
+        loading={savingExpense}
+        onAdded={fetchExpenses}  // whatever your existing refetch function is called
+      />
 
     </div>
   );
