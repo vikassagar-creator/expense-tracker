@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  Securely manage personal expenses with JWT authentication, protected routes, and a RESTful backend.
+  Securely manage, organize, and analyze personal expenses with JWT authentication, protected APIs, and a responsive dashboard.
 </p>
 
 <p align="center">
@@ -14,6 +14,7 @@
 ![Vite](https://img.shields.io/badge/Build-Vite-purple?logo=vite)
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green?logo=fastapi)
 ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-blue?logo=postgresql)
+![SQLAlchemy](https://img.shields.io/badge/ORM-SQLAlchemy-red?logo=sqlalchemy)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange)
 ![Deployment](https://img.shields.io/badge/Deployed-Vercel%20%7C%20Render-black)
 
@@ -21,33 +22,36 @@
 
 ---
 
-# 🌐 Live Demo
+## 🌐 Live Demo
 
-🚀 **Frontend:**  
+🚀 **Frontend:**
 https://expense-tracker-demonic1.vercel.app
 
-⚙️ **Backend API:**  
+⚙️ **Backend API:**
 https://expense-tracker-sdx5.onrender.com
 
-📖 **Swagger API Documentation:**  
+📖 **Swagger API Documentation:**
 https://expense-tracker-sdx5.onrender.com/docs
 
 ---
 
 # 📌 About The Project
 
-Expense Tracker is a full-stack web application that helps users manage their personal expenses securely.
+Expense Tracker is a full-stack web application designed to help users manage and understand their personal expenses.
 
-Users can create accounts, log in, and manage their own expenses while ensuring data privacy through JWT authentication and user-based authorization.
+Users can securely create an account, authenticate using JWT, and manage their own expenses through a React frontend connected to a FastAPI REST API.
 
-This project demonstrates real-world full-stack development including:
+The application provides:
 
-- Frontend development with React
-- Backend API development with FastAPI
-- Database management with PostgreSQL
-- Secure authentication systems
-- REST API architecture
-- Cloud deployment
+* Expense CRUD operations
+* Search and category filtering
+* Expense sorting
+* Dashboard analytics
+* Category-based spending visualization
+* Protected user-specific data
+* Responsive expense management interface
+
+The project demonstrates practical full-stack development using React, FastAPI, PostgreSQL, SQLAlchemy, JWT authentication, REST APIs, and cloud deployment.
 
 ---
 
@@ -55,61 +59,132 @@ This project demonstrates real-world full-stack development including:
 
 ## 🔐 Authentication
 
-- ✅ User Registration
-- ✅ User Login
-- ✅ Password hashing with bcrypt
-- ✅ JWT authentication
-- ✅ Protected routes
-- ✅ Secure user sessions
-- ✅ User-specific data access
+* ✅ User registration
+* ✅ User login
+* ✅ Password hashing
+* ✅ JWT authentication
+* ✅ Protected API routes
+* ✅ Protected frontend navigation
+* ✅ User-specific expense access
+* ✅ Authorization using the authenticated user
 
+---
 
 ## 💰 Expense Management
 
-- ✅ Add new expenses
-- ✅ View personal expenses
-- ✅ Edit existing expenses
-- ✅ Delete expenses
-- ✅ Expense categories
-- ✅ Date tracking
-- ✅ User-based expense filtering
+* ✅ Add new expenses
+* ✅ View personal expenses
+* ✅ Edit existing expenses
+* ✅ Delete expenses
+* ✅ Expense categories
+* ✅ Expense dates
+* ✅ Expense amounts
+* ✅ User-based expense ownership
 
+---
+
+## 🔎 Expense Search & Filtering
+
+* ✅ Search expenses by title
+* ✅ Filter expenses by category
+* ✅ Sort expenses
+* ✅ Combine search and filtering
+* ✅ Dynamic expense table updates
+
+---
+
+## 📊 Dashboard & Analytics
+
+* ✅ Total spending
+* ✅ Current-month spending
+* ✅ Transaction count
+* ✅ Top spending category
+* ✅ Category spending breakdown
+* ✅ Spending overview chart
+* ✅ Expense distribution chart
+* ✅ Recent transactions
+* ✅ Automatic dashboard updates
+
+---
 
 ## 🎨 Frontend
 
-- React + Vite
-- React Router
-- Bootstrap UI
-- Fetch API integration
-- Responsive design
-- Protected navigation
-- Modal-based editing
-- Component-based architecture
+* React + Vite
+* React Router
+* Component-based architecture
+* Fetch API integration
+* React Icons
+* React Hot Toast
+* Responsive layout
+* Dashboard interface
+* Expense management table
+* Add/Edit expense modals
+* Search and filtering toolbar
+* Dynamic page headers
+* Sidebar navigation
+* Top navigation bar
+* Profile dropdown
 
+---
 
 ## ⚙️ Backend
 
-- FastAPI framework
-- SQLAlchemy ORM
-- PostgreSQL database
-- Pydantic validation
-- JWT authentication
-- RESTful API design
-- Swagger documentation
+* FastAPI framework
+* SQLAlchemy ORM
+* PostgreSQL database
+* Pydantic validation
+* JWT authentication
+* Password hashing
+* RESTful API architecture
+* User authorization
+* Expense analytics endpoint
+* Swagger/OpenAPI documentation
 
 ---
 
 # 🛠 Tech Stack
 
-| Category | Technology |
-|---|---|
-| Frontend | React, Vite, Bootstrap |
-| Backend | FastAPI, Python |
-| Database | PostgreSQL |
-| ORM | SQLAlchemy |
-| Authentication | JWT, Passlib, bcrypt |
-| API | REST API |
-| Deployment | Vercel + Render |
+| Category        | Technology              |
+| --------------- | ----------------------- |
+| Frontend        | React, Vite, JavaScript |
+| Routing         | React Router            |
+| Styling         | CSS                     |
+| UI Icons        | React Icons             |
+| Notifications   | React Hot Toast         |
+| Backend         | FastAPI, Python         |
+| Database        | PostgreSQL              |
+| ORM             | SQLAlchemy              |
+| Validation      | Pydantic                |
+| Authentication  | JWT                     |
+| API             | REST API                |
+| Documentation   | Swagger / OpenAPI       |
+| Deployment      | Vercel + Render         |
+| Version Control | Git + GitHub            |
+
+---
+
+# 🏗️ Application Architecture
+
+```text
+                         Expense Tracker
+                               |
+              ┌────────────────┴────────────────┐
+              │                                 │
+        React Frontend                    FastAPI Backend
+              │                                 │
+        React Router                      REST API
+              │                                 │
+        Protected UI                     JWT Authentication
+              │                                 │
+        Fetch API                              │
+              │                                 │
+              └───────────────┬─────────────────┘
+                              │
+                         SQLAlchemy
+                              │
+                              ↓
+                         PostgreSQL
+```
 
 ---
 
@@ -121,8 +196,21 @@ expense-tracker/
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
+│   │   │   ├── expenses/
+│   │   │   └── ...
+│   │   │
 │   │   ├── pages/
-│   │   ├── services/
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Expenses.jsx
+│   │   │   └── ...
+│   │   │
+│   │   ├── layouts/
+│   │   │   ├── AppLayout.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   └── TopBar.jsx
+│   │   │
+│   │   ├── config/
+│   │   ├── styles/
 │   │   ├── App.jsx
 │   │   └── main.jsx
 │   │
@@ -134,8 +222,6 @@ expense-tracker/
 │   │   ├── models.py
 │   │   ├── schemas.py
 │   │   ├── database.py
-│   │   ├── auth.py
-│   │   ├── jwt_handler.py
 │   │   └── main.py
 │   │
 │   └── requirements.txt
@@ -147,7 +233,7 @@ expense-tracker/
 
 # 🚀 Installation & Setup
 
-## Clone Repository
+## 1. Clone Repository
 
 ```bash
 git clone https://github.com/vikassagar-creator/expense-tracker.git
@@ -159,19 +245,19 @@ cd expense-tracker
 
 # ⚙️ Backend Setup
 
-Navigate to backend:
+Navigate to the backend:
 
 ```bash
 cd backend
 ```
 
-Create virtual environment:
+Create a virtual environment:
 
 ```bash
 python -m venv venv
 ```
 
-Activate environment:
+Activate the environment.
 
 ### Windows
 
@@ -191,7 +277,18 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Run backend:
+Create a `.env` file and configure your database and authentication settings.
+
+Example:
+
+```env
+DATABASE_URL=your_postgresql_database_url
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+Run the backend:
 
 ```bash
 uvicorn app.main:app --reload
@@ -225,7 +322,13 @@ Install dependencies:
 npm install
 ```
 
-Run development server:
+Create the frontend environment file:
+
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -245,7 +348,10 @@ http://localhost:5173
 User Registration
         |
         ↓
-Password Hashed Using bcrypt
+Password Hashing
+        |
+        ↓
+User Stored in PostgreSQL
         |
         ↓
 User Login
@@ -254,10 +360,16 @@ User Login
 JWT Token Generated
         |
         ↓
-Token Stored In Browser
+Token Stored in Browser
         |
         ↓
-Protected Routes Accessed
+Protected API Requests
+        |
+        ↓
+FastAPI Validates JWT
+        |
+        ↓
+Authenticated User
         |
         ↓
 User Can Manage Own Expenses
@@ -267,51 +379,83 @@ User Can Manage Own Expenses
 
 # 📡 REST API Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/users/register` | Register new user |
-| POST | `/users/login` | Login user |
-| GET | `/expenses/` | Get user expenses |
-| POST | `/expenses/` | Create expense |
-| PUT | `/expenses/{id}` | Update expense |
-| DELETE | `/expenses/{id}` | Delete expense |
-| GET | `/expenses/analytics` | Expense analytics |
+## Authentication
 
----
-
-# 🗄 Database Design
-
-## Users
-
-| Column | Type |
-|---|---|
-| id | Integer |
-| username | String |
-| email | String |
-| hashed_password | String |
-
+| Method | Endpoint          | Description                      |
+| ------ | ----------------- | -------------------------------- |
+| POST   | `/users/register` | Register a new user              |
+| POST   | `/users/login`    | Authenticate user and return JWT |
 
 ## Expenses
 
-| Column | Type |
-|---|---|
-| id | Integer |
-| title | String |
-| amount | Float |
-| category | String |
-| date | Date |
-| user_id | Foreign Key |
+| Method | Endpoint              | Description                       |
+| ------ | --------------------- | --------------------------------- |
+| GET    | `/expenses/`          | Get authenticated user's expenses |
+| POST   | `/expenses/`          | Create an expense                 |
+| PUT    | `/expenses/{id}`      | Update an expense                 |
+| DELETE | `/expenses/{id}`      | Delete an expense                 |
+| GET    | `/expenses/analytics` | Get expense analytics             |
 
-Relationship:
+---
+
+# 🗄️ Database Design
+
+## Users
+
+| Column          | Type    |
+| --------------- | ------- |
+| id              | Integer |
+| username        | String  |
+| email           | String  |
+| hashed_password | String  |
+
+## Expenses
+
+| Column   | Type        |
+| -------- | ----------- |
+| id       | Integer     |
+| title    | String      |
+| amount   | Float       |
+| category | String      |
+| date     | Date        |
+| user_id  | Foreign Key |
+
+### Relationship
 
 ```text
 User
- |
+ │
  ├── Expense
- |
+ │
  ├── Expense
- |
+ │
  └── Expense
+```
+
+Each expense belongs to an authenticated user through `user_id`.
+
+---
+
+# 📊 Analytics
+
+The backend provides an analytics endpoint that calculates expense information which is then displayed by the React dashboard.
+
+```text
+Expenses
+    |
+    ↓
+FastAPI Analytics Endpoint
+    |
+    ├── Total Spending
+    ├── Transaction Count
+    └── Category Breakdown
+             |
+             ↓
+       React Dashboard
+             |
+      ┌──────┴──────┐
+      ↓             ↓
+  Bar Chart      Donut Chart
 ```
 
 ---
@@ -319,74 +463,137 @@ User
 # ☁️ Deployment Architecture
 
 ```text
-              React Frontend
-                    |
-                    |
-                 Vercel
-                    |
-                    |
-                    ↓
-              FastAPI Backend
-                    |
-                    |
-                 Render
-                    |
-                    |
-                    ↓
-             PostgreSQL Database
+                React Frontend
+                       |
+                       ↓
+                    Vercel
+                       |
+                       ↓
+                FastAPI Backend
+                       |
+                       ↓
+                    Render
+                       |
+                       ↓
+               PostgreSQL Database
 ```
 
 ---
 
-# 📈 Current Progress
+# 📈 Current Project Status
 
-✅ Full CRUD Operations  
-✅ PostgreSQL Integration  
-✅ SQLAlchemy ORM  
-✅ JWT Authentication  
-✅ Password Hashing  
-✅ Protected API Routes  
-✅ Protected React Routes  
-✅ User Authorization  
-✅ Responsive UI  
-✅ Cloud Deployment  
+### Core Application
+
+* [x] React frontend
+* [x] FastAPI backend
+* [x] PostgreSQL integration
+* [x] SQLAlchemy ORM
+* [x] REST API
+* [x] User authentication
+* [x] JWT authentication
+* [x] Password hashing
+* [x] Protected API routes
+* [x] User authorization
+
+### Expense Management
+
+* [x] Create expenses
+* [x] Read expenses
+* [x] Update expenses
+* [x] Delete expenses
+* [x] Expense categories
+* [x] Expense dates
+* [x] Search
+* [x] Category filtering
+* [x] Sorting
+
+### Dashboard
+
+* [x] Spending summary
+* [x] Monthly spending
+* [x] Transaction count
+* [x] Top category
+* [x] Category analytics
+* [x] Spending chart
+* [x] Expense distribution chart
+* [x] Recent transactions
+
+### UI
+
+* [x] Responsive dashboard
+* [x] Sidebar navigation
+* [x] Dynamic Topbar
+* [x] Profile dropdown
+* [x] Add expense modal
+* [x] Edit expense modal
+* [x] Toast notifications
+* [x] Search/filter toolbar
+* [x] Responsive expense table
+
+### Deployment
+
+* [x] Frontend deployed
+* [x] Backend deployed
+* [x] PostgreSQL database
+* [x] Swagger documentation
 
 ---
 
 # 🚧 Future Improvements
 
-- 📊 Analytics dashboard
-- 📈 Expense charts
-- 🔎 Search expenses
-- 🏷 Category filters
-- 📅 Monthly reports
-- 💰 Budget planner
-- 📄 Export CSV/PDF
-- 🌙 Dark mode
-- 🐳 Docker support
-- 🧪 Unit testing
+The next development phase can focus on extending the application beyond the current expense-management core.
+
+* [ ] Budget management
+* [ ] Advanced analytics
+* [ ] Monthly and yearly reports
+* [ ] CSV/PDF export
+* [ ] Profile management
+* [ ] Application settings
+* [ ] Notification system
+* [ ] Improved mobile navigation
+* [ ] Pagination for large expense datasets
+* [ ] Automated testing
+* [ ] Docker support
 
 ---
 
 # 📚 What I Learned
 
-Building this project helped me gain practical experience in:
+Building this project provided practical experience with:
 
-- Full-stack application development
-- FastAPI REST API creation
-- PostgreSQL database design
-- SQLAlchemy ORM
-- JWT authentication
-- Password security
-- React architecture
-- API integration
-- Cloud deployment
+* Full-stack web application development
+* React component architecture
+* React Router and protected navigation
+* FastAPI REST API development
+* PostgreSQL database design
+* SQLAlchemy ORM
+* Pydantic validation
+* JWT authentication
+* Password security
+* User authorization
+* CRUD API implementation
+* API integration
+* Data visualization
+* Frontend state management
+* Responsive UI development
+* Git and GitHub workflows
+* Cloud deployment with Vercel and Render
 
 ---
 
 # 📸 Screenshots
 
-_Adding screenshots of the application dashboard, login page, and expense management pages here._
+### Dashboard
+
+*Add dashboard screenshot here.*
+
+### Expense Management
+
+*Add expense management screenshot here.*
+
+### Authentication
+
+*Add login/register screenshot here.*
 
 ---
 
@@ -394,7 +601,9 @@ _Adding screenshots of the application dashboard, login page, and expense manage
 
 ## Vikas Sagar
 
-GitHub:  
+Computer Science & Engineering
+
+GitHub:
 https://github.com/vikassagar-creator
 
 ---
