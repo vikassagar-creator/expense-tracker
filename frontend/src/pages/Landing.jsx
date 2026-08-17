@@ -1,5 +1,5 @@
 
-import Navbar from "../components/landing/navbar";
+import Navbar from "../components/landing/Navbar";
 import Hero from "../components/landing/Hero";
 import Features from "../components/landing/Features";
 import DashboardPreview from "../components/landing/DashboardPreview";
