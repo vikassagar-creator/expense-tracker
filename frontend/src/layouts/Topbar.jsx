@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { LuBell, LuChevronDown, LuSearch, LuLogOut, LuUser, LuSettings } from "react-icons/lu";
 import "./TopBar.css";
 
-function Topbar({ title, subtitle, showSearch = false }) {
+function TopBar({ title, subtitle, showSearch = false }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
@@ -75,4 +75,4 @@ function Topbar({ title, subtitle, showSearch = false }) {
     </header>
   );
 }
-export default Topbar;
+export default TopBar;

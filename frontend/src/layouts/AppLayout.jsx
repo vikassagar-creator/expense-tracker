@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import Topbar from "./TopBar";
+import Sidebar from "./Sidebar.jsx";
+import TopBar from "./TopBar.jsx";
 import PageConfig, { defaultPageConfig } from "../config/PageConfig";
 import "../styles/layout.css";
 
@@ -12,7 +12,7 @@ function AppLayout() {
       <Sidebar />
 
       <div className="app-main">
-        <Topbar
+        <TopBar
         title={config.title}
         subtitle={config.subtitle}
         showSearch={config.showSearch} />
