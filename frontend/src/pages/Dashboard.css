@@ -1,18 +1,349 @@
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.dashboard {
+    width: 100%;
 }
 
-.modal-content {
-  background: rgb(200, 173, 173);
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
+/* =========================
+   Dashboard Header
+========================= */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 2rem;
+}
+
+.dashboard-header p {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* =========================
+   Add Expense Button
+========================= */
+
+.add-expense-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    background: var(--primary);
+    color: #fff;
+
+    border: none;
+    border-radius: var(--radius);
+
+    padding: 0.7rem 1.1rem;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.add-expense-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.add-expense-btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* =========================
+   Summary Cards
+========================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.summary-label {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.summary-card h2 {
+    margin: 0.5rem 0;
+    color: var(--text);
+    font-size: 1.7rem;
+}
+
+.summary-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+/* =========================
+   Charts
+========================= */
+
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card-header h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.05rem;
+}
+
+.card-header p {
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+/* =========================
+   View All
+========================= */
+
+.view-all-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    padding: 0.25rem 0;
+}
+
+.view-all-btn:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1100px) {
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .add-expense-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-card {
+        padding: 1rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+    }
+}
+
+
+/* =========================
+   Recent Transactions
+========================= */
+
+.recent-expenses {
+    margin-top: 1.5rem;
+}
+
+.expense-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.expense-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.expense-table th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+
+    color: var(--muted);
+    background: var(--surface-alt);
+
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.expense-table td {
+    padding: 0.9rem 1rem;
+
+    color: var(--text);
+    font-size: 0.88rem;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.expense-table tbody tr {
+    transition: background var(--transition-fast);
+}
+
+.expense-table tbody tr:hover {
+    background: var(--bg);
+}
+
+.expense-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Amount */
+
+.expense-amount {
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* Category */
+
+.expense-category {
+    display: inline-block;
+
+    padding: 0.3rem 0.65rem;
+
+    border-radius: 999px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Actions */
+
+.expense-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.expense-action-btn {
+    width: 32px;
+    height: 32px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+
+    background: var(--surface);
+    color: var(--muted);
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.expense-action-btn:hover {
+    background: var(--bg);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.expense-action-btn.delete:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+/* Empty state */
+
+.expense-empty {
+    padding: 2.5rem 1rem;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    .expense-table {
+        min-width: 650px;
+    }
 }

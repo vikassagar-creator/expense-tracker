@@ -1,68 +1,153 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
-import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { toast } from "react-hot-toast";
+import DashboardHeader from "../components/dashboard/DashboardHeader";
+import AddExpenseModal from "../components/expenses/AddExpenseModal";
+
+import SummaryCards from "../components/dashboard/SummaryCards";
+import SpendingCharts from "../components/dashboard/SpendingCharts";
+import RecentExpenses from "../components/dashboard/RecentExpenses";
+import EditExpenseModal from "../components/dashboard/EditExpenseModal";
 
 function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [analytics, setAnalytics] = useState(null);
+  
+  const [loading, setLoading] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [savingExpense, setSavingExpense] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
+  console.log("API URL:", API_URL);
+
+  const fetchExpenses = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_URL}/expenses`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.error(
+        "Error fetching expenses:",
+        response.status,
+        response.statusText
+      );
+      return;
+    }
+
+    const data = await response.json();
+
+    console.log("Expenses fetched successfully:", data);
+
+    setExpenses(data);
+
+  } catch (error) {
+    console.error("Error fetching expenses:", error);
+  }
+};
 
   const fetchAnalytics = async () => {
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch("https://expense-tracker-sdx5.onrender.com/expenses/analytics",{
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
 
+    const response = await fetch(
+      `${API_URL}/expenses/analytics`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
-    if (!res.ok) {
-      console.error("Analytics fetch failed");
+    if (!response.ok) {
+      console.error(
+        "Analytics fetch failed:",
+        response.status,
+        response.statusText
+      );
       return;
     }
 
-    const data = await res.json();
+    const data = await response.json();
+
+    console.log("ANALYTICS RESPONSE:", data);
+
     setAnalytics(data);
-  } catch (err) {
-    console.error(err);
+
+  } catch (error) {
+    console.error("Analytics error:", error);
+    toast.error("Unable to load dashboard data");
   }
 };
 
+  const refreshDashboard = async () => {
+    setLoading(true);
+
+    await Promise.all([
+      fetchExpenses(),
+      fetchAnalytics(),
+    ]);
+    setLoading(false);
+  };
+
   const chartData = analytics?.category_breakdown
     ? Object.entries(analytics.category_breakdown).map(([name, value]) => ({
-        name,
-        value,
-      }))
+      name,
+      value,
+    }))
     : [];
 
-  const handleDeleteRow = async (id) => {
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+    "Are you sure you want to delete this expense?"
+  );
+
+    if (!confirmed) {
+    return;
+  }
     try {
       const token = localStorage.getItem("token");
-      await fetch(`https://expense-tracker-sdx5.onrender.com/expenses/${id}`, {
+      const response = await fetch(`${API_URL}/expenses/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       // Remove the deleted expense from the state
-      setExpenses((prev) => prev.filter((expense) => expense.id !== id));
+      if(!response.ok) {
+        toast.error("Failed to delete expense");
+        return;
+      }
+
+      toast.success("Expenses deleted")
+      await refreshDashboard();
+
     } catch (error) {
       console.error("Error deleting expense:", error);
+      toast.error("Something went wrong")
     }
   };
 
   const handleUpdateExpense = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!editingExpense.title || !editingExpense.amount) {
-        alert("Fields cannot be empty");
+      if (!editingExpense.title.trim()) {
+        toast.error("Title is required");
+        return;
+      }
+
+      if (!editingExpense.amount || Number(editingExpense.amount) <= 0) {
+        toast.error("Enter a valid amount");
         return;
       }
       const response = await fetch(
-        `https://expense-tracker-sdx5.onrender.com/expenses/${editingExpense.id}`,
+        `${API_URL}/expenses/${editingExpense.id}`,
         {
           method: "PUT",
           headers: {
@@ -76,218 +161,144 @@ function Dashboard() {
             category: editingExpense.category,
             date: editingExpense.date,
           }),
-
-          
-        },
+},
       );
 
       if (response.ok) {
         // Update the state with the edited expense
-        await fetchExpenses();
+        toast.success("Expense updated")
+
+        await refreshDashboard();
+        
         setEditingExpense(null);
         setShowModal(false);
       } else {
         console.error("Error updating expense:", response.statusText);
+        
       }
     } catch (error) {
       console.error("Error updating expense:", error);
+      toast.error("Unable to update")
     }
   };
-  const fetchExpenses = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch("https://expense-tracker-sdx5.onrender.com/expenses", {
-        method: "GET",
+
+  const handleEdit = (expense) =>{
+    setEditingExpense(expense);
+    setShowModal(true);
+};
+  
+  const handleCloseModal = () => {
+  setEditingExpense(null);
+  setShowModal(false);
+};
+
+  
+
+const handleSaveExpense = async (updatedExpense) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(
+      `${API_URL}/expenses/${updatedExpense.id}`,
+      {
+        method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      });
-      if (response.ok) {
-        console.log("Expenses fetched successfully");
-        const data = await response.json();
-        setExpenses(data);
-      } else {
-        console.error("Error fetching expenses:", response.statusText);
+        body: JSON.stringify({
+          title: updatedExpense.title,
+          amount: Number(updatedExpense.amount),
+          category: updatedExpense.category,
+          date: updatedExpense.date,
+        }),
       }
-    } catch (error) {
-      console.error("Error fetching expenses:", error);
+    );
+
+    if (!response.ok) {
+      toast.error("Failed to update expense");
+      return;
     }
-  };
+
+    toast.success("Expense updated successfully");
+
+    handleCloseModal();
+
+    // Important: update table + cards + charts
+    await refreshDashboard();
+
+  } catch (error) {
+    console.error("Update error:", error);
+    toast.error("Something went wrong");
+  }
+};
+
+const handleAddExpense = async (expenseData) => {
+  setSavingExpense(true);
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/expenses/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(expenseData),
+    });
+    if (!response.ok) throw new Error("Failed to add expense");
+    toast.success("Expense added");
+    setShowAddModal(false);
+    fetchExpenses(); // your existing refetch function
+  } catch (err) {
+    toast.error("Something went wrong");
+  } finally {
+    setSavingExpense(false);
+  }
+};
+
   useEffect(() => {
-    fetchExpenses();
-    fetchAnalytics();
+    refreshDashboard();
+
   }, []);
 
   return (
-    <>
-      <h1>Dashboard Page</h1>
-      {showModal && editingExpense && (
-        <div className="modal" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleUpdateExpense();
-              }}
-            >
-              <h2>Edit Expense</h2>
-              <div>
-                <label>Title:</label>
-                <input
-                  value={editingExpense.title}
-                  onChange={(e) =>
-                    setEditingExpense({
-                      ...editingExpense,
-                      title: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label>Amount:</label>
-                <input
-                  value={editingExpense.amount}
-                  onChange={(e) =>
-                    setEditingExpense({
-                      ...editingExpense,
-                      amount: Number(e.target.value),
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label>Category:</label>
-                <input
-                  value={editingExpense.category}
-                  onChange={(e) =>
-                    setEditingExpense({
-                      ...editingExpense,
-                      category: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div>
-                <label>Date:</label>
-                <input
-                  value={editingExpense.date}
-                  onChange={(e) =>
-                    setEditingExpense({
-                      ...editingExpense,
-                      date: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <button type="submit" className="btn btn-primary me-2">
-                Update
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger me-2"
-                onClick={() => setShowModal(false)}
-              >
-                close
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+        <div className="dashboard">
 
-      <table className="table">
-        <thead className="table-dark">
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Category</th>
-            <th scope="col">Date</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((expense) => (
-            <tr key={expense.id}>
-              <td>{expense.title}</td>
-              <td>₹{expense.amount}</td>
-              <td>{expense.category}</td>
-              <td>{expense.date}</td>
-              <td>
-                <button
-                  onClick={() => handleDeleteRow(expense.id)}
-                  type="button"
-                  className="btn btn-danger me-2"
-                >
-                  Delete
-                </button>
-                <button
-                  onClick={() => {
-                    setEditingExpense(expense);
-                    setShowModal(true);
-                  }}
-                  type="button"
-                  className="btn btn-primary me-2"
-                >
-                  Edit
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            <DashboardHeader onAddExpense={() => setShowAddModal(true)} />
 
-      <div className="card">
-        <h3>Total Spending</h3>
-        <h2>₹{analytics?.total || 0}</h2>
-      </div>
+            <SummaryCards
+                analytics={analytics}
+                expenses={expenses}
+            />
 
-      <div>
-        <h3>Category Breakdown</h3>
+            <SpendingCharts
+                chartData={chartData}
+            />
 
-        {analytics?.category_breakdown &&
-          Object.entries(analytics.category_breakdown).map(([key, value]) => (
-            <div key={key}>
-              {key} : ₹{value}
-            </div>
-          ))}
-      </div>
+           <RecentExpenses
+        expenses={expenses}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        loading={loading}
+      />
 
-      <PieChart width={400} height={300}>
-        <Pie
-          data={chartData}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          outerRadius={100}
-          fill="#8884d8"
-          label
-        >
-          {chartData.map((entry, index) => (
-            <Cell key={index} />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart>
-    </>
+     <EditExpenseModal
+      expense={editingExpense}
+      isOpen={showModal}
+      onClose={handleCloseModal}
+      onSave={handleSaveExpense}
+    />
+
+    <AddExpenseModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onSave={handleAddExpense}
+        loading={savingExpense}
+        onAdded={fetchExpenses}  // whatever your existing refetch function is called
+      />
+
+    </div>
   );
 }
 
 export default Dashboard;
-/*
-
-
-
-<div>
-            Title:{expense.title} 
-            </div>
-          <div>
-            Amount:₹{expense.amount} 
-            </div>
-          <div>
-            Category:{expense.category}
-            </div>
-          <div>
-            Date:{expense.date} 
-            </div>
-        </div>
-*/

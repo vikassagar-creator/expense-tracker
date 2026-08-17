@@ -1,0 +1,227 @@
+/* =========================
+   CTA SECTION
+========================= */
+
+.cta {
+    padding: 6rem 0;
+    background: var(--surface);
+}
+
+.cta-container {
+    width: min(calc(100% - 48px), 900px);
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Eyebrow */
+
+.cta-eyebrow {
+    display: inline-block;
+    margin-bottom: 1rem;
+
+    color: var(--accent);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+/* Heading */
+
+.cta-container h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+}
+
+.cta-container h2 span {
+    color: var(--primary);
+}
+
+/* Description */
+
+.cta-description {
+    max-width: 600px;
+
+    margin: 1.25rem auto 0;
+
+    color: var(--muted);
+
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   CTA BUTTONS
+========================= */
+
+.cta-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    margin-top: 2rem;
+}
+
+.cta-primary,
+.cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+
+    padding: 0.8rem 1.4rem;
+
+    border-radius: 10px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* Primary */
+
+.cta-primary {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.cta-primary:hover {
+    background: var(--primary-dark);
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* Secondary */
+
+.cta-secondary {
+    background: transparent;
+
+    color: var(--primary);
+
+    border: 1px solid var(--primary);
+}
+
+.cta-secondary:hover {
+    background: var(--primary);
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   CTA HIGHLIGHTS
+========================= */
+
+.cta-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1.5rem;
+
+    max-width: 750px;
+
+    margin: 3.5rem auto 0;
+
+    padding-top: 2.5rem;
+
+    border-top: 1px solid var(--border);
+}
+
+.highlight-item {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 0.75rem;
+
+    text-align: left;
+}
+
+.highlight-icon {
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #E8EBDD;
+
+    color: var(--primary);
+
+    font-size: 1rem;
+}
+
+.highlight-item h5 {
+    margin: 0 0 0.25rem;
+
+    color: var(--text);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.highlight-item p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .cta {
+        padding: 4.5rem 0;
+    }
+
+    .cta-container {
+        width: min(calc(100% - 32px), 600px);
+    }
+
+    .cta-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .cta-highlights {
+        grid-template-columns: 1fr;
+
+        gap: 1.25rem;
+
+        max-width: 350px;
+    }
+
+}
