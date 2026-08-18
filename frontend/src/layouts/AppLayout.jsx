@@ -13,9 +13,10 @@ function AppLayout() {
 
       <div className="app-main">
         <TopBar
-        title={config.title}
-        subtitle={config.subtitle}
-        showSearch={config.showSearch} />
+          title={config.title}
+          subtitle={config.subtitle}
+          showSearch={config.showSearch}
+        />
 
         <main className="app-content">
           <Outlet />

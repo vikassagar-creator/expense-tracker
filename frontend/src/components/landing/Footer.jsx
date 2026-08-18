@@ -5,106 +5,78 @@ import { IoWallet } from "react-icons/io5";
 import "./Footer.css";
 
 function Footer() {
-    return (
-        <footer className="footer">
+  return (
+    <footer className="footer">
+      <div className="footer-container">
+        {/* Brand */}
+        <div className="footer-brand">
+          <h3>
+            <IoWallet className="footer-logo-icon" />
+            Expense Tracker
+          </h3>
 
-            <div className="footer-container">
+          <p>
+            Track your spending, understand your habits, and build better
+            financial decisions — all in one place.
+          </p>
+        </div>
 
-                {/* Brand */}
-                <div className="footer-brand">
+        {/* Product */}
+        <div className="footer-column">
+          <h4>Product</h4>
 
-                    <h3>
-                        <IoWallet className="footer-logo-icon" />
-                        Expense Tracker
-                    </h3>
+          <a href="#hero">Home</a>
 
-                    <p>
-                        Track your spending, understand your habits,
-                        and build better financial decisions — all in one place.
-                    </p>
+          <a href="#features">Features</a>
 
-                </div>
+          <a href="#dashboard-preview">Dashboard</a>
 
+          <a href="#cta">Get Started</a>
+        </div>
 
-                {/* Product */}
-                <div className="footer-column">
+        {/* Project */}
+        <div className="footer-column">
+          <h4>Project</h4>
 
-                    <h4>Product</h4>
+          <a href="#tech-stack">Tech Stack</a>
 
-                    <a href="#hero">Home</a>
+          <a
+            href="https://github.com/vikassagar-creator/expense-tracker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub ↗
+          </a>
+        </div>
 
-                    <a href="#features">Features</a>
+        {/* Connect */}
+        <div className="footer-column">
+          <h4>Connect</h4>
 
-                    <a href="#dashboard-preview">
-                        Dashboard
-                    </a>
+          <a
+            href="https://github.com/vikassagar-creator/expense-tracker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub />
+            GitHub
+          </a>
 
-                    <a href="#cta">
-                        Get Started
-                    </a>
+          <a href="mailto:bvikassagar@gmail.com">
+            <SiGmail />
+            Email
+          </a>
+        </div>
+      </div>
 
-                </div>
+      {/* Bottom */}
+      <div className="footer-bottom">
+        <p>© {new Date().getFullYear()} Expense Tracker</p>
 
-
-                {/* Project */}
-                <div className="footer-column">
-
-                    <h4>Project</h4>
-
-                    <a href="#tech-stack">
-                        Tech Stack
-                    </a>
-
-                    <a
-                        href="https://github.com/vikassagar-creator/expense-tracker"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        GitHub ↗
-                    </a>
-
-                </div>
-
-
-                {/* Connect */}
-                <div className="footer-column">
-
-                    <h4>Connect</h4>
-
-                    <a
-                        href="https://github.com/vikassagar-creator/expense-tracker"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <FaGithub />
-                        GitHub
-                    </a>
-
-                    <a href="mailto:bvikassagar@gmail.com">
-                        <SiGmail />
-                        Email
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            {/* Bottom */}
-            <div className="footer-bottom">
-
-                <p>
-                    © {new Date().getFullYear()} Expense Tracker
-                </p>
-
-                <p>
-                    Built with React • FastAPI • PostgreSQL
-                </p>
-
-            </div>
-
-        </footer>
-    );
+        <p>Built with React • FastAPI • PostgreSQL</p>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;

@@ -1,6 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { LuBell, LuChevronDown, LuSearch, LuLogOut, LuUser, LuSettings } from "react-icons/lu";
+import {
+  LuBell,
+  LuChevronDown,
+  LuSearch,
+  LuLogOut,
+  LuUser,
+  LuSettings,
+} from "react-icons/lu";
 import "./TopBar.css";
 
 function TopBar({ title, subtitle, showSearch = false }) {
