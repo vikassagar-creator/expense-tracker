@@ -7,7 +7,6 @@ function ProfileInfo() {
     const [profile, setProfile] = useState({
         username: '',
         email: '',
-        personalInfo: ''
     });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -15,7 +14,7 @@ function ProfileInfo() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-            const data = await getProfile();
+                const data = await getProfile();
                 setProfile({
                     username: data.username || '',
                     email: data.email || '',
@@ -79,9 +78,9 @@ function ProfileInfo() {
                         className="profile-input"
                     />
                 </div>
-                </div>
+            </div>
 
-                <div className="profile-button-row">
+            <div className="profile-button-row">
                 <button
                     type="button"
                     className="profile-save-button"

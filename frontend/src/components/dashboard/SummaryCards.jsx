@@ -10,6 +10,7 @@ import formatCurrency from "../../utils/formatCurrency";
 function SummaryCards({ expenses = [], analytics }) {
 
   const totalSpending = analytics?.total || 0;
+  const thisMonthSpending = analytics?.this_month ?? 0;
   const transactionCount = expenses.length;
   const categoryBreakdown =
     analytics?.category_breakdown || {};
@@ -49,7 +50,7 @@ function SummaryCards({ expenses = [], analytics }) {
         </span>
 
         <h2>
-          {formatCurrency(totalSpending)}
+          {formatCurrency(thisMonthSpending)}
         </h2>
 
         <p>
