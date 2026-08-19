@@ -1,3 +1,6 @@
+from datetime import date
+from calendar import month_abbr
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -32,9 +35,40 @@ def get_analytics(db: Session = Depends(get_db), current_user: User = Depends(ge
     for e in expenses:
         category_data[e.category] = category_data.get(e.category, 0) + e.amount
 
+    today = date.today()
+    this_month_total = sum(
+        e.amount for e in expenses
+        if e.date.year == today.year and e.date.month == today.month
+    )
+
+    # Last 6 months of spending, oldest first, zero-filled for months
+    # with no expenses so the trend line doesn't have gaps.
+    months = []
+    y, m = today.year, today.month
+    for _ in range(6):
+        months.append((y, m))
+        m -= 1
+        if m == 0:
+            m = 12
+            y -= 1
+    months.reverse()
+
+    monthly_totals = {(y, m): 0 for (y, m) in months}
+    for e in expenses:
+        key = (e.date.year, e.date.month)
+        if key in monthly_totals:
+            monthly_totals[key] += e.amount
+
+    monthly_trend = [
+        {"month": f"{month_abbr[m]} {y}", "total": monthly_totals[(y, m)]}
+        for (y, m) in months
+    ]
+
     return {
         "total": total,
-        "category_breakdown": category_data
+        "this_month": this_month_total,
+        "category_breakdown": category_data,
+        "monthly_trend": monthly_trend
     }
 
 

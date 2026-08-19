@@ -7,6 +7,8 @@ import {
     ResponsiveContainer,
     BarChart,
     Bar,
+    LineChart,
+    Line,
     XAxis,
     YAxis,
     CartesianGrid
@@ -23,11 +25,12 @@ const COLORS = [
 ];
 import formatCurrency from "../../utils/formatCurrency";
 
-function SpendingCharts({ chartData }) {
+function SpendingCharts({ chartData, trendData = [] }) {
 
     
 
     return (
+        <div className="dashboard-charts-wrap">
         <div className="dashboard-charts">
             {/* BAR CHART */}
 
@@ -107,6 +110,47 @@ function SpendingCharts({ chartData }) {
                     <Tooltip />
                     <Legend />
                 </PieChart>
+            </ResponsiveContainer>
+        </div>
+
+    </div>
+
+    </div>
+
+    {/* MONTHLY SPENDING TREND */}
+
+    <div className="dashboard-card dashboard-card--trend">
+
+        <div className="card-header">
+            <div>
+                <h3>Monthly Spending Trend</h3>
+                <p>Your total spending over the last 6 months.</p>
+            </div>
+        </div>
+
+        <div className="chart-container">
+
+            <ResponsiveContainer width="100%" height={260}>
+                <LineChart data={trendData}>
+
+                    <CartesianGrid strokeDasharray="3 3" />
+
+                    <XAxis dataKey="month" tick={{ fontSize: 11 }} />
+
+                    <YAxis />
+
+                    <Tooltip formatter={(value) => formatCurrency(value)} />
+
+                    <Line
+                        type="monotone"
+                        dataKey="total"
+                        stroke={COLORS[0]}
+                        strokeWidth={2.5}
+                        dot={{ r: 4 }}
+                        activeDot={{ r: 6 }}
+                    />
+
+                </LineChart>
             </ResponsiveContainer>
         </div>
 
