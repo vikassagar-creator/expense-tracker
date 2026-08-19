@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { registerUser } from "../services/api";
+
 function Register() {
   const navigation = useNavigate();
   const [username, setUsername] = useState("");
@@ -10,7 +12,6 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,34 +22,19 @@ function Register() {
     }
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/users/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, email, password })
+      await registerUser(username, email, password);
+      toast.success("Registration successful!", {
+        className: "success-toast",
       });
-      const data = await response.json();
-
-      if (response.ok) {
-        toast.success("Registration successful!", {
-          className: "success-toast",
-        });
-        console.log(data);
-        navigation("/login"); // Redirect to landing page after successful registration
-        //clear form fields
-        setUsername("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-        navigation("/login");
-      } else {
-        toast.error("Registration failed: " + data.detail);
-      }
+      //clear form fields
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      navigation("/login");
     }
     catch (error) {
-      console.error("Error:", error);
-      toast.error("An error occurred during registration.");
+      toast.error("Registration failed: " + error.message);
     }
     finally {
       setLoading(false);

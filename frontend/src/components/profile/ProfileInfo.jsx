@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ProfileInfo.css';
+import { toast } from 'react-hot-toast';
+import { getProfile, updateProfile } from '../../services/api';
 
 function ProfileInfo() {
     const [profile, setProfile] = useState({
@@ -7,29 +9,47 @@ function ProfileInfo() {
         email: '',
         personalInfo: ''
     });
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/profile');
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch profile data');
-                }
-
-                const data = await response.json();
+            const data = await getProfile();
                 setProfile({
                     username: data.username || '',
                     email: data.email || '',
-                    personalInfo: data.personalInfo || ''
                 });
             } catch (error) {
                 console.error('Error fetching profile:', error);
+                toast.error('Could not load profile');
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchProfile();
     }, []);
+
+    const handleSave = async () => {
+        setSaving(true);
+        try {
+            const data = await updateProfile({
+                username: profile.username,
+                email: profile.email,
+            });
+            setProfile({ username: data.username, email: data.email });
+            toast.success('Profile updated');
+        } catch (error) {
+            toast.error(error.message || 'Failed to update profile');
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) {
+        return <div className="profile-card">Loading profile...</div>;
+    }
 
     return (
         <div className="profile-card">
@@ -59,23 +79,16 @@ function ProfileInfo() {
                         className="profile-input"
                     />
                 </div>
-
-                <div>
-                    <label className="profile-label">
-                        Personal Info
-                    </label>
-                    <textarea
-                        rows="5"
-                        value={profile.personalInfo}
-                        onChange={(e) => setProfile({ ...profile, personalInfo: e.target.value })}
-                        className="profile-textarea"
-                    />
                 </div>
-            </div>
 
-            <div className="profile-button-row">
-                <button type="button" className="profile-save-button">
-                    Save Changes
+                <div className="profile-button-row">
+                <button
+                    type="button"
+                    className="profile-save-button"
+                    onClick={handleSave}
+                    disabled={saving}
+                >
+                    {saving ? 'Saving...' : 'Save Changes'}
                 </button>
             </div>
         </div>

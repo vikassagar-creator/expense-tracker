@@ -3,48 +3,30 @@ import "./Auth.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { loginUser } from "../services/api";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const API_URL = import.meta.env.VITE_API_URL;
   const navigation = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(username);
-    console.log(password);
-
     if(isLoading) return; // Prevent multiple submissions
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
+      const data = await loginUser(username, password);
         localStorage.setItem("token", data.access_token);
         toast.success("Login successful!", {
           className: "success-toast",
         });
-        console.log(data);
-
-        navigation("/dashboard");
-      } else {
-        toast.error("Login failed: " + data.detail);
-      }
+      navigation("/dashboard");
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("An error occurred during login.");
-    }
-    finally {
+      toast.error("Login failed: " + error.message);
+    } finally {
       setIsLoading(false);
     }
   };
