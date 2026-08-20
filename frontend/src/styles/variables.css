@@ -13,6 +13,7 @@
   --highlight: #e7b86a;
 
   --bg: #f7f4ed;
+  
   --surface: #fffdf8;
   --surface-alt: #f1ede4;
 
@@ -67,4 +68,41 @@
 
   --transition:
     0.25s ease;
+}
+
+/* ==============================
+   Dark theme overrides
+   Applied via [data-theme="dark"] on <html> / <body>
+============================== */
+
+[data-theme="dark"] {
+  --primary: #3fa679;
+  --primary-dark: #2f7d5c;
+  --primary-light: rgba(63, 166, 121, 0.16);
+
+  --accent: #e08a67;
+  --accent-dark: #c96f4d;
+
+  --highlight: #e7b86a;
+
+  --bg: #14181a;
+  --surface: #1c2124;
+  --surface-alt: #242a2d;
+
+  --text: #eef1f0;
+  --muted: #98a3a0;
+
+  --border: #313a3d;
+
+  --success: #4c9d76;
+  --danger: #e0645f;
+  --warning: #d6a13c;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+  --shadow-md:
+    0 8px 24px rgba(0, 0, 0, 0.3);
+
+  --shadow-lg:
+    0 16px 40px rgba(0, 0, 0, 0.4);
 }

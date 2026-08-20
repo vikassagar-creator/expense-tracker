@@ -1,0 +1,244 @@
+.budget-page {
+  width: 100%;
+}
+
+.budget-header {
+  margin-bottom: 2rem;
+}
+
+.budget-header h1 {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
+.budget-header p {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.budget-empty {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.budget-overall-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.budget-overall-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.budget-overall-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.budget-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.budget-edit-btn:hover {
+  background: var(--surface-alt);
+}
+
+.budget-overall-figures {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.budget-figure-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.budget-overall-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.budget-negative {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.budget-bar-track {
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--surface-alt, #f1ede4);
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.budget-bar-track--sm {
+  height: 8px;
+}
+
+.budget-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.budget-bar-fill--over {
+  background: var(--danger);
+}
+
+.budget-pct {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.budget-not-set {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.budget-section-title {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin: 0 0 1rem;
+}
+
+.budget-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.budget-category-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.1rem 1.25rem;
+}
+
+.budget-category-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.budget-category-name {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.budget-category-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.budget-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.budget-input {
+  flex: 1;
+  min-width: 120px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--surface);
+}
+
+.budget-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.budget-save-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.budget-save-btn:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.budget-cancel-btn {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.82rem;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+}
+
+.budget-save-btn:disabled,
+.budget-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .budget-overall-figures {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .budget-overall-sub {
+    align-items: flex-start;
+  }
+}
