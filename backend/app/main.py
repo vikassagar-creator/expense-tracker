@@ -18,6 +18,7 @@ Base.metadata.create_all(bind=engine)
 
 app.include_router(expenses.router)
 app.include_router(users.router)
+app.include_router(budgets.router)
 
 @app.get("/")
 def root():
