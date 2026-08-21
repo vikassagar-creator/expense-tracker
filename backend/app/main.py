@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from .models import Expense, User
+from .models import Expense, User, Budget
 from .database import engine, Base 
-from .routers import expenses, users
+from .routers import expenses, users, budgets
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
