@@ -129,6 +129,83 @@
 }
 
 /* ==============================
+   Notification menu
+============================== */
+
+.notification-menu {
+  position: relative;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  width: 320px;
+  max-height: 360px;
+  overflow-y: auto;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+
+  z-index: 50;
+}
+
+.notification-dropdown-header {
+  padding: 0.9rem 1rem 0.7rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.notification-empty {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+
+  font-size: 0.83rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item-icon {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  font-size: 0.95rem;
+}
+
+.notification-item--warning .notification-item-icon {
+  color: var(--warning, #d6a13c);
+}
+
+.notification-item--danger .notification-item-icon {
+  color: var(--danger);
+}
+
+/* ==============================
    Profile menu
 ============================== */
 
