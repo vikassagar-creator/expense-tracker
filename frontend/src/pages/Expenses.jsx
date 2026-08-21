@@ -6,7 +6,8 @@ import ExpenseHeader from "../components/expenses/ExpenseHeader";
 import AddExpenseModal from "../components/expenses/AddExpenseModal";
 import ExpenseTable from "../components/expenses/ExpenseTable";
 import ExpensesToolbar from "../components/expenses/ExpenseToolbar";
-import EditExpenseModal from "../components/dashboard/EditExpenseModal"
+import EditExpenseModal from "../components/dashboard/EditExpenseModal";
+import DeleteConfirmModal from "../components/expenses/DeleteConfirmModal";
 
 function Expenses() {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -21,9 +22,16 @@ function Expenses() {
   // Edit expense
   const [editingExpense, setEditingExpense] = useState(null);
 
+  // Delete expense
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
+  const [deleting, setDeleting] = useState(false);
+
   // Filters
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [sortBy, setSortBy] = useState("date_desc");
 
 
   // =========================
@@ -174,23 +182,27 @@ setExpenses(sortedExpenses);
   };
 
 
-  // =========================
+   // =========================
   // DELETE
   // =========================
 
-  const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this expense?"
-    );
+  const handleDelete = (id) => {
+    setDeleteTargetId(id);
+  };
 
-    if (!confirmed) {
-      return;
-    }
+  const cancelDelete = () => {
+    if (deleting) return;
+    setDeleteTargetId(null);
+  };
 
+  const confirmDelete = async () => {
+    if (!deleteTargetId) return;
+
+    setDeleting(true);
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(`${API_URL}/expenses/${id}`, {
+      const response = await fetch(`${API_URL}/expenses/${deleteTargetId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -206,10 +218,13 @@ setExpenses(sortedExpenses);
 
       // Refresh table
       await fetchExpenses();
+      setDeleteTargetId(null);
 
     } catch (error) {
       console.error("Error deleting expense:", error);
       toast.error("Something went wrong");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -218,19 +233,39 @@ setExpenses(sortedExpenses);
   // FILTER EXPENSES
   // =========================
 
-  const filteredExpenses = expenses.filter((expense) => {
+  const filteredExpenses = expenses
+    .filter((expense) => {
 
-    const matchesSearch =
-      expense.title
-        .toLowerCase()
-        .includes(search.toLowerCase());
+      const matchesSearch =
+        expense.title
+          .toLowerCase()
+          .includes(search.toLowerCase());
 
-    const matchesCategory =
-      filterCategory === "All" ||
-      expense.category === filterCategory;
+      const matchesCategory =
+        filterCategory === "All" ||
+        expense.category === filterCategory;
 
-    return matchesSearch && matchesCategory;
-  });
+      const matchesDateFrom =
+        !dateFrom || expense.date >= dateFrom;
+
+      const matchesDateTo =
+        !dateTo || expense.date <= dateTo;
+
+      return matchesSearch && matchesCategory && matchesDateFrom && matchesDateTo;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "date_asc":
+          return a.date.localeCompare(b.date);
+        case "amount_desc":
+          return b.amount - a.amount;
+        case "amount_asc":
+          return a.amount - b.amount;
+        case "date_desc":
+        default:
+          return b.date.localeCompare(a.date);
+      }
+    });
 
 
   // =========================
@@ -256,6 +291,14 @@ setExpenses(sortedExpenses);
         category={filterCategory}
         onCategoryChange={setFilterCategory}
 
+        dateFrom={dateFrom}
+        onDateFromChange={setDateFrom}
+        dateTo={dateTo}
+        onDateToChange={setDateTo}
+
+        sortBy={sortBy}
+        onSortByChange={setSortBy}
+
         onAddExpense={() => setShowAddModal(true)}
       />
 
@@ -278,6 +321,13 @@ setExpenses(sortedExpenses);
       isOpen={Boolean(editingExpense)}
       onClose={()=>setEditingExpense(null)}
       onSave={handleSaveExpense}
+      />
+
+      <DeleteConfirmModal
+        isOpen={Boolean(deleteTargetId)}
+        onCancel={cancelDelete}
+        onConfirm={confirmDelete}
+        deleting={deleting}
       />
 
     </div>

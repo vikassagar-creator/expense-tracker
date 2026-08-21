@@ -80,7 +80,7 @@
 }
 
 .add-modal-close:hover {
-    background: var(--background);
+    background: var(--bg);
     color: var(--text);
 }
 
@@ -183,7 +183,7 @@
 /* Cancel */
 
 .cancel-btn {
-    background: var(--background);
+    background: var(--bg);
     color: var(--text);
 
     border: 1px solid var(--border);

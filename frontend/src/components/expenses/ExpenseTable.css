@@ -48,7 +48,7 @@
 /* Table head */
 
 .expense-table thead {
-  background: var(--background);
+  background: var(--bg);
 }
 
 .expense-table th {
@@ -74,7 +74,7 @@ transition: background 0.2s ease;
 }
 
 .expense-table tbody tr:hover {
-  background: var(--background);
+  background: var(--bg);
 }
 
 /* Table cells */
@@ -103,7 +103,7 @@ transition: background 0.2s ease;
 
   border-radius: 999px;
 
-  background: var(--background);
+  background: var(--bg);
   border: 1px solid var(--border);
 
   color: var(--text);
@@ -152,7 +152,7 @@ transition: background 0.2s ease;
 }
 
 .expense-action.edit {
-  background: var(--background);
+  background: var(--bg);
   color: var(--primary);
 }
 
@@ -162,12 +162,12 @@ transition: background 0.2s ease;
 }
 
 .expense-action.delete {
-  background: var(--background);
-  color: #dc2626;
+  background: var(--bg);
+  color: var(--danger);
 }
 
 .expense-action.delete:hover {
-  background: #dc2626;
+  background: var(--danger);
   color: white;
 }
 
@@ -286,7 +286,7 @@ transition: background 0.2s ease;
 /* Hover */
 
 .pagination-btn:hover:not(:disabled) {
-  background: var(--background);
+  background: var(--bg);
   border-color: var(--primary);
   color: var(--primary);
 }

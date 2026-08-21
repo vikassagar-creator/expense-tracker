@@ -8,12 +8,15 @@ import SummaryCards from "../components/dashboard/SummaryCards";
 import SpendingCharts from "../components/dashboard/SpendingCharts";
 import RecentExpenses from "../components/dashboard/RecentExpenses";
 import EditExpenseModal from "../components/dashboard/EditExpenseModal";
+import DeleteConfirmModal from "../components/expenses/DeleteConfirmModal";
 
 function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [analytics, setAnalytics] = useState(null);
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
+  const [deleting, setDeleting] = useState(false);
   
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -42,8 +45,6 @@ function Dashboard() {
     }
 
     const data = await response.json();
-
-    console.log("Expenses fetched successfully:", data);
 
     setExpenses(data);
 
@@ -76,7 +77,6 @@ function Dashboard() {
 
     const data = await response.json();
 
-    console.log("ANALYTICS RESPONSE:", data);
 
     setAnalytics(data);
 
@@ -104,16 +104,21 @@ function Dashboard() {
     : [];
 
   const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-    "Are you sure you want to delete this expense?"
-  );
+    setDeleteTargetId(id);
+  };
 
-    if (!confirmed) {
-    return;
-  }
+  const cancelDelete = () => {
+    if (deleting) return;
+    setDeleteTargetId(null);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteTargetId) return;
+
+    setDeleting(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${API_URL}/expenses/${id}`, {
+      const response = await fetch(`${API_URL}/expenses/${deleteTargetId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -127,10 +132,13 @@ function Dashboard() {
 
       toast.success("Expenses deleted")
       await refreshDashboard();
+      setDeleteTargetId(null);
 
     } catch (error) {
       console.error("Error deleting expense:", error);
       toast.error("Something went wrong")
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -273,6 +281,7 @@ const handleAddExpense = async (expenseData) => {
 
             <SpendingCharts
                 chartData={chartData}
+                trendData={analytics?.monthly_trend || []}
             />
 
            <RecentExpenses
@@ -295,6 +304,13 @@ const handleAddExpense = async (expenseData) => {
         onSave={handleAddExpense}
         loading={savingExpense}
         onAdded={fetchExpenses}  // whatever your existing refetch function is called
+      />
+
+      <DeleteConfirmModal
+        isOpen={Boolean(deleteTargetId)}
+        onCancel={cancelDelete}
+        onConfirm={confirmDelete}
+        deleting={deleting}
       />
 
     </div>

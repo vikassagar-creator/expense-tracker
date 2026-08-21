@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from .models import Expense, User, Budget
 from .database import engine, Base 
-from .routers import expenses, users, budgets
+from .routers import expenses, users, budgets, reports
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -19,6 +19,7 @@ Base.metadata.create_all(bind=engine)
 app.include_router(expenses.router)
 app.include_router(users.router)
 app.include_router(budgets.router)
+app.include_router(reports.router)
 
 @app.get("/")
 def root():
