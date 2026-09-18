@@ -1,0 +1,395 @@
+.topbar {
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 2rem;
+
+  background: var(--surface);
+
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-left h1 {
+  margin: 0;
+
+  font-family: var(--font-ui);
+  font-size: 1.4rem;
+  font-weight: 600;
+
+  color: var(--text);
+}
+
+.topbar-left p {
+  margin: 0.25rem 0 0;
+
+  font-size: 0.85rem;
+
+  color: var(--muted);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ==============================
+   Notification button
+============================== */
+
+.notification-btn {
+  position: relative;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  background: var(--surface);
+  color: var(--text);
+
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.notification-btn:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.notification-btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+.notification-dot {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+
+  background: var(--danger);
+  border: 1.5px solid var(--surface);
+}
+
+/* ==============================
+   Notification menu
+============================== */
+
+.notification-menu {
+  position: relative;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  width: 320px;
+  max-height: 360px;
+  overflow-y: auto;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+
+  z-index: 50;
+}
+
+.notification-dropdown-header {
+  padding: 0.9rem 1rem 0.7rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.notification-empty {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+
+  font-size: 0.83rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item-icon {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  font-size: 0.95rem;
+}
+
+.notification-item--warning .notification-item-icon {
+  color: var(--warning, #d6a13c);
+}
+
+.notification-item--danger .notification-item-icon {
+  color: var(--danger);
+}
+
+/* ==============================
+   Profile menu
+============================== */
+
+.profile-menu {
+  position: relative;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  padding: 0.35rem 0.6rem 0.35rem 0.35rem;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+
+  cursor: pointer;
+  color: var(--text);
+
+  transition: var(--transition-fast);
+}
+
+.profile-btn:hover {
+  background: var(--surface-alt);
+  border-color: var(--border);
+}
+
+.profile-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+  color: var(--surface);
+
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profile-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.profile-role {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.chevron {
+  width: 16px;
+  color: var(--muted);
+  transition: var(--transition-fast);
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+/* ==============================
+   Profile dropdown
+============================== */
+
+.profile-dropdown {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  right: 0;
+
+  width: 190px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-lg);
+
+  padding: 0.4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+
+  z-index: 100;
+}
+
+.profile-menu {
+  position: relative;
+  z-index: 100;
+}
+
+.profile-dropdown a,
+.profile-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  width: 100%;
+  text-align: left;
+
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-sm);
+
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  color: var(--text);
+
+  background: none;
+  border: none;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  transition: var(--transition-fast);
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown button:hover {
+  background: var(--surface-alt);
+}
+
+.profile-dropdown svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.profile-dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.3rem 0.2rem;
+}
+
+.dropdown-logout {
+  color: var(--danger) !important;
+}
+
+.dropdown-logout svg {
+  color: var(--danger);
+}
+
+.dropdown-logout:hover {
+  background: rgba(201, 76, 76, 0.08) !important;
+}
+
+/* ==============================
+   Responsive
+============================== */
+
+@media (max-width: 768px) {
+  .topbar {
+    height: 68px;
+    padding: 0 var(--space-4);
+  }
+
+  .topbar-left h1 {
+    font-size: 1.2rem;
+  }
+
+  .topbar-left p {
+    font-size: 0.78rem;
+  }
+
+  .topbar-right {
+    gap: 0.6rem;
+  }
+
+  .profile-info {
+    display: none;
+  }
+
+  .profile-btn {
+    padding-right: 0.35rem;
+  }
+
+  .chevron {
+    display: none;
+  }
+
+  .notification-dropdown,
+  .profile-dropdown {
+    right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    padding: 0 var(--space-3);
+  }
+
+  .topbar-left h1 {
+    font-size: 1.05rem;
+  }
+
+  .topbar-left p {
+    display: none;
+  }
+
+  .notification-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .profile-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .notification-dropdown {
+    width: min(300px, calc(100vw - 24px));
+  }
+
+  .profile-dropdown {
+    width: 180px;
+  }
+}

@@ -1,100 +1,288 @@
+/* =========================================================
+   EXPENSE TOOLBAR
+   Search + category + date range + sort + add button
+   ========================================================= */
+
 .expenses-toolbar {
+  width: 100%;
+  min-width: 0;
+
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
+
+  padding: var(--space-4);
+
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg, 14px);
-  padding: 0.9rem 1rem;
-  margin-bottom: 1.25rem;
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+
   flex-wrap: wrap;
 }
 
+/* ---------------------------------------------------------
+   Search
+   --------------------------------------------------------- */
+
 .toolbar-search {
+  min-width: 220px;
+  flex: 1 1 240px;
+
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex: 1;
-  min-width: 200px;
-  padding: 0.55rem 0.85rem;
+  gap: var(--space-2);
+
+  height: var(--control-height);
+
+  padding: 0 var(--space-3);
+
+  background: var(--surface-alt);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface-alt, #F8F7F3);
+  border-radius: var(--control-radius);
+
   color: var(--muted);
 }
 
-.toolbar-search svg { width: 15px; height: 15px; flex-shrink: 0; }
-
-.toolbar-search input {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 0.88rem;
-  color: var(--text);
-  width: 100%;
+.toolbar-search svg {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
 }
 
-.toolbar-filter {
-  padding: 0.55rem 2rem 0.55rem 0.85rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+.toolbar-search input {
+  width: 100%;
+  min-width: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
   color: var(--text);
-  font-size: 0.85rem;
+
+  font-family: var(--font-ui);
+  font-size: var(--fs-secondary);
+}
+
+.toolbar-search input::placeholder {
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------
+   Select filters
+   --------------------------------------------------------- */
+
+.toolbar-filter {
+  height: var(--control-height);
+
+  min-width: 145px;
+
+  padding: 0 34px 0 var(--space-3);
+
+  border: 1px solid var(--border);
+  border-radius: var(--control-radius);
+
+  background-color: var(--surface);
+  color: var(--text);
+
+  font-family: var(--font-ui);
+  font-size: var(--fs-secondary);
+
   cursor: pointer;
+
   appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2'><path d='m6 9 6 6 6-6'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 0.6rem center;
+  background-position: right 10px center;
   background-size: 14px;
 }
 
-.toolbar-add-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.1rem;
-  border: none;
-  border-radius: var(--radius);
-  background: var(--primary);
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s ease;
+.toolbar-filter:focus-visible,
+.toolbar-date-input:focus-visible,
+.toolbar-search:focus-within {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
-.toolbar-add-btn:hover { background: var(--primary-dark); }
+
+/* ---------------------------------------------------------
+   Date range
+   --------------------------------------------------------- */
 
 .toolbar-date-range {
+  min-width: 250px;
+
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.6rem;
+  gap: var(--space-2);
+
+  height: var(--control-height);
+
+  padding: 0 var(--space-3);
+
+  background: var(--surface-alt);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface-alt, #F8F7F3);
+  border-radius: var(--control-radius);
 }
 
 .toolbar-date-input {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 0.82rem;
-  color: var(--text);
-  font-family: inherit;
   min-width: 0;
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+  color: var(--text);
+
+  font-family: var(--font-ui);
+  font-size: 12px;
 }
 
 .toolbar-date-sep {
-  font-size: 0.78rem;
+  flex: 0 0 auto;
+
   color: var(--muted);
-  flex-shrink: 0;
+
+  font-size: 12px;
 }
 
+/* ---------------------------------------------------------
+   Add button
+   --------------------------------------------------------- */
+
+.toolbar-add-btn {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  height: var(--control-height);
+
+  padding: 0 var(--btn-padding-x);
+
+  border: 1px solid transparent;
+  border-radius: var(--control-radius);
+
+  background: var(--primary);
+  color: var(--text-inverted);
+
+  font-family: var(--font-ui);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-button);
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.toolbar-add-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.toolbar-add-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .toolbar-search {
+    flex-basis: 200px;
+  }
+
+  .toolbar-date-range {
+    min-width: 230px;
+  }
+
+  .toolbar-filter {
+    min-width: 135px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .toolbar-search {
+    flex: 1 1 100%;
+  }
+
+  .toolbar-filter {
+    flex: 1 1 160px;
+  }
+
+  .toolbar-date-range {
+    flex: 1 1 260px;
+  }
+
+  .toolbar-add-btn {
+    flex: 1 1 160px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 640px) {
-  .expenses-toolbar { flex-direction: column; align-items: stretch; }
-  .toolbar-add-btn { justify-content: center; }
-  .toolbar-date-range { justify-content: space-between; }
-  .toolbar-date-input { width: 100%; }
+  .expenses-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: var(--space-3);
+
+    padding: var(--space-3);
+  }
+
+  .toolbar-search,
+  .toolbar-filter,
+  .toolbar-date-range,
+  .toolbar-add-btn {
+    width: 100%;
+    min-width: 0;
+    flex: none;
+    box-sizing: border-box;
+  }
+
+  .toolbar-date-range {
+    justify-content: space-between;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+  .toolbar-date-range {
+    height: auto;
+    min-height: var(--control-height);
+
+    flex-wrap: wrap;
+
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .toolbar-date-input {
+    width: calc(50% - 10px);
+    height: 34px;
+  }
+
+  .toolbar-date-sep {
+    display: none;
+  }
 }

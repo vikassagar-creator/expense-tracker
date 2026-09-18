@@ -1,322 +1,392 @@
+/* =========================================================
+   FULL EXPENSE TABLE
+   All selectors are scoped to .expense-table-card.
+   This prevents conflicts with RecentExpenses.
+   ========================================================= */
+
 .expense-table-card {
   width: 100%;
+  min-width: 0;
+
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
+
   box-shadow: var(--shadow-sm);
+
   overflow: hidden;
-  font-family: var(--font-display);
+  font-family: var(--font-ui);
 }
 
-/* Header */
+/* ---------------------------------------------------------
+   Header
+   --------------------------------------------------------- */
 
-.expense-table-header {
+.expense-table-card .expense-table-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.5rem;
+  justify-content: space-between;
+
+  padding: var(--space-5) var(--space-6);
+
   border-bottom: 1px solid var(--border);
 }
 
-.expense-table-header h3 {
+.expense-table-card .expense-table-header h2 {
   margin: 0;
+
   color: var(--text);
-  font-size: 1.05rem;
+
+  font-size: var(--fs-section-title);
+  font-weight: var(--fw-section-title);
 }
 
-.expense-table-header p {
-  margin: 0.3rem 0 0;
+.expense-table-card .expense-table-header p {
+  margin: var(--space-2) 0 0;
+
   color: var(--muted);
-  font-size: 0.85rem;
+
+  font-size: var(--fs-secondary);
 }
 
-/* Table wrapper */
+/* ---------------------------------------------------------
+   Wrapper
+   --------------------------------------------------------- */
 
-.expense-table-wrapper {
+.expense-table-card .expense-table-wrapper {
   width: 100%;
+
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Table */
+/* ---------------------------------------------------------
+   Table
+   --------------------------------------------------------- */
 
-.expense-table {
+.expense-table-card .expense-table {
   width: 100%;
+  min-width: 760px;
+
   border-collapse: collapse;
-  min-width: 700px;
 }
 
-/* Table head */
-
-.expense-table thead {
-  background: var(--bg);
+.expense-table-card .expense-table thead {
+  background: var(--surface-alt);
 }
 
-.expense-table th {
-  padding: 0.9rem 1.25rem;
+.expense-table-card .expense-table th {
+  padding: var(--space-3) var(--space-5);
+
   text-align: left;
+
   color: var(--muted);
-  font-size: 0.75rem;
+
+  font-size: 12px;
   font-weight: 600;
+
   text-transform: uppercase;
   letter-spacing: 0.04em;
+
   border-bottom: 1px solid var(--border);
 }
 
-/* Table rows */
-
-.expense-table tbody tr {
+.expense-table-card .expense-table tbody tr {
   border-bottom: 1px solid var(--border);
-transition: background 0.2s ease;
+
+  transition: background var(--transition-fast);
 }
 
-.expense-table tbody tr:last-child {
+.expense-table-card .expense-table tbody tr:last-child {
   border-bottom: none;
 }
 
-.expense-table tbody tr:hover {
-  background: var(--bg);
+.expense-table-card .expense-table tbody tr:hover {
+  background: var(--surface-alt);
 }
 
-/* Table cells */
+.expense-table-card .expense-table td {
+  padding: var(--space-4) var(--space-5);
 
-.expense-table td {
-  padding: 1rem 1.25rem;
-    color: var(--text);
-  font-size: 0.9rem;
+  color: var(--text);
+
+  font-size: var(--fs-table);
   vertical-align: middle;
 }
 
-/* Expense title */
+/* ---------------------------------------------------------
+   Title
+   --------------------------------------------------------- */
 
-.expense-title {
-  font-weight: 600;
+.expense-table-card .expense-table td strong {
   color: var(--text);
+  font-weight: 600;
 }
 
-/* Category */
+/* ---------------------------------------------------------
+   Category
+   --------------------------------------------------------- */
 
-.category-badge {
+.expense-table-card .category-badge {
   display: inline-flex;
   align-items: center;
 
-  padding: 0.3rem 0.65rem;
+  padding: 4px 9px;
 
   border-radius: 999px;
 
-  background: var(--bg);
-  border: 1px solid var(--border);
-
-  color: var(--text);
-
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-/* Amount */
-
-.expense-amount {
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text);
+
+  white-space: nowrap;
 }
 
-/* Date */
+/* ---------------------------------------------------------
+   Payment mode
+   --------------------------------------------------------- */
 
-.expense-date {
+.expense-table-card .payment-mode-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 9px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  background: var(--bg);
   color: var(--muted);
+
+  font-size: 12px;
+  font-weight: 500;
+
+  white-space: nowrap;
 }
 
-/* Actions */
+/* ---------------------------------------------------------
+   Amount
+   --------------------------------------------------------- */
 
-.expense-actions {
+.expense-table-card .expense-amount {
+  color: var(--danger);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------
+   Actions
+   --------------------------------------------------------- */
+
+.expense-table-card .expense-actions {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: var(--space-2);
 }
 
-/* Edit / Delete buttons */
-
-.expense-action {
+.expense-table-card .expense-action {
   width: 34px;
   height: 34px;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  border: none;
-  border-radius: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
 
   cursor: pointer;
 
-  transition: all 0.2s ease;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
-.expense-action.edit {
-  background: var(--bg);
+.expense-table-card .expense-action.edit {
+  background: var(--primary-light);
   color: var(--primary);
 }
 
-.expense-action.edit:hover {
+.expense-table-card .expense-action.edit:hover {
   background: var(--primary);
-  color: white;
+  color: var(--text-inverted);
+  transform: translateY(-1px);
 }
 
-.expense-action.delete {
-  background: var(--bg);
+.expense-table-card .expense-action.delete {
+  background: var(--danger-light);
   color: var(--danger);
 }
 
-.expense-action.delete:hover {
+.expense-table-card .expense-action.delete:hover {
   background: var(--danger);
-  color: white;
+  color: var(--text-inverted);
+  transform: translateY(-1px);
 }
 
-/* Empty state */
+.expense-table-card .expense-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
 
-.expense-empty {
+/* ---------------------------------------------------------
+   Loading / messages
+   --------------------------------------------------------- */
+
+.expense-table-card .expense-table-message,
+.expense-table-card .expense-loading {
+  min-height: 180px;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
+  color: var(--muted);
+
+  font-size: var(--fs-secondary);
+}
+
+/* ---------------------------------------------------------
+   Empty state
+   --------------------------------------------------------- */
+
+.expense-table-card .expense-empty {
   min-height: 180px;
 
-  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-8);
 
   text-align: center;
 }
 
-.expense-empty p {
-  margin: 0;
+/* ---------------------------------------------------------
+   Footer
+   --------------------------------------------------------- */
 
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-/* Loading */
-
-.expense-loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  min-height: 180px;
-
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-/* Mobile */
-
-@media (max-width: 700px) {
-  .expense-table-header {
-    padding: 1rem;
-  }
-
-  .expense-table th,
-  .expense-table td {
-    padding: 0.8rem 1rem;
-  }
-}
-
-/* =========================
-   TABLE FOOTER
-========================= */
-
-.expense-table-footer {
+.expense-table-card .expense-table-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-4);
 
-  padding: 1rem 1.25rem;
+  padding: var(--space-4) var(--space-5);
 
   border-top: 1px solid var(--border);
 }
 
-.expense-count {
+.expense-table-card .expense-count {
   margin: 0;
 
   color: var(--muted);
-  font-size: 0.8rem;
+
+  font-size: 12px;
 }
 
-.expense-count strong {
+.expense-table-card .expense-count strong {
   color: var(--text);
   font-weight: 600;
 }
 
-/* =========================
-   PAGINATION
-========================= */
+/* ---------------------------------------------------------
+   Pagination
+   --------------------------------------------------------- */
 
-.pagination {
+.expense-table-card .pagination {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: var(--space-1);
 }
 
-/* Every pagination button */
-
-.pagination-btn {
+.expense-table-card .pagination-btn {
   min-width: 34px;
   height: 34px;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  padding: 0 0.6rem;
+  padding: 0 var(--space-2);
 
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 
   background: var(--surface);
   color: var(--text);
 
-  font-size: 0.8rem;
+  font-family: var(--font-ui);
+  font-size: 12px;
   font-weight: 500;
 
   cursor: pointer;
 
   transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
-/* Hover */
-
-.pagination-btn:hover:not(:disabled) {
-  background: var(--bg);
+.expense-table-card .pagination-btn:hover:not(:disabled) {
+  background: var(--surface-alt);
   border-color: var(--primary);
   color: var(--primary);
 }
 
-/* Active page */
-
-.pagination-btn.active {
+.expense-table-card .pagination-btn.active {
   background: var(--primary);
   border-color: var(--primary);
-  color: white;
+  color: var(--text-inverted);
 }
 
-/* Disabled previous/next */
-
-.pagination-btn:disabled {
+.expense-table-card .pagination-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-/* Mobile */
+.expense-table-card .pagination-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
 
-@media (max-width: 600px) {
-  .expense-table-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .expense-table-card .expense-table-header {
+    padding: var(--space-5);
   }
 
-  .pagination {
-    width: 100%;
+  .expense-table-card .expense-table th,
+  .expense-table-card .expense-table td {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .expense-table-card .expense-table-header {
+    padding: var(--space-4);
+  }
+
+  .expense-table-card .expense-table-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .expense-table-card .expense-count {
+    text-align: center;
+  }
+
+  .expense-table-card .pagination {
     justify-content: center;
+    flex-wrap: wrap;
   }
 }

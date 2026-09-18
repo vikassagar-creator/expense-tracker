@@ -1,19 +1,22 @@
-import io
 import csv
+import io
+from calendar import month_name, monthrange
 from datetime import date
-from calendar import monthrange, month_name
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..models import Expense, User
 from ..jwt_handler import get_current_user
+from ..models import Expense, User
 
 router = APIRouter(prefix="/reports", tags=["reports"])
 
 
+# Shared by all three endpoints below: fetch the month's expenses,
+# then shape them into one summary dict (_build_summary) that the
+# JSON, CSV, and PDF endpoints each render differently.
 def _month_expenses(db: Session, user_id: int, year: int, month: int):
     if month < 1 or month > 12:
         raise HTTPException(status_code=400, detail="Invalid month")
@@ -55,6 +58,7 @@ def _build_summary(expenses, year, month):
                 "category": e.category,
                 "amount": e.amount,
                 "date": e.date.isoformat(),
+                "payment_mode": e.payment_mode,
             }
             for e in expenses
         ],
@@ -94,9 +98,9 @@ def download_report_csv(
     for category, amount in summary["category_breakdown"].items():
         writer.writerow([category, amount])
     writer.writerow([])
-    writer.writerow(["Date", "Title", "Category", "Amount"])
+    writer.writerow(["Date", "Title", "Category", "Amount", "Payment Mode"])
     for e in summary["expenses"]:
-        writer.writerow([e["date"], e["title"], e["category"], e["amount"]])
+        writer.writerow([e["date"], e["title"], e["category"],e["payment_mode"], e["amount"]])
 
     buffer.seek(0)
     filename = f"report-{year}-{month:02d}.csv"
@@ -120,8 +124,8 @@ def download_report_pdf(
         from reportlab.lib.styles import getSampleStyleSheet
         from reportlab.lib.units import cm
         from reportlab.platypus import (
-            SimpleDocTemplate,
             Paragraph,
+            SimpleDocTemplate,
             Spacer,
             Table,
             TableStyle,
@@ -153,7 +157,7 @@ def download_report_pdf(
 
     stats_table = Table(
         [
-            ["Total Spent", f"Rs. {summary['total']:,.2f}"],
+            ["Total Spent", f"₹ {summary['total']:,.2f}"],
             ["Transactions", str(summary["transaction_count"])],
         ],
         colWidths=[8 * cm, 8 * cm],
@@ -175,7 +179,7 @@ def download_report_pdf(
         elements.append(Paragraph("By Category", styles["Heading3"]))
         cat_rows = [["Category", "Amount"]]
         for category, amount in summary["category_breakdown"].items():
-            cat_rows.append([category, f"Rs. {amount:,.2f}"])
+            cat_rows.append([category, f"₹ {amount:,.2f}"])
 
         cat_table = Table(cat_rows, colWidths=[10 * cm, 6 * cm])
         cat_table.setStyle(
@@ -196,11 +200,13 @@ def download_report_pdf(
 
     if summary["expenses"]:
         elements.append(Paragraph("Transactions", styles["Heading3"]))
-        tx_rows = [["Date", "Title", "Category", "Amount"]]
+        tx_rows = [["Date", "Title", "Category","Payment Mode", "Amount"]]
         for e in summary["expenses"]:
-            tx_rows.append([e["date"], e["title"], e["category"], f"Rs. {e['amount']:,.2f}"])
+            tx_rows.append(
+                [e["date"], e["title"], e["category"],e["payment_mode"], f"₹ {e['amount']:,.2f}"]
+            )
 
-        tx_table = Table(tx_rows, colWidths=[3 * cm, 6 * cm, 4 * cm, 3 * cm])
+        tx_table = Table(tx_rows, colWidths=[2.5 * cm, 5 * cm, 3.5 * cm, 3 * cm, 3 * cm])
         tx_table.setStyle(
             TableStyle(
                 [
@@ -209,7 +215,12 @@ def download_report_pdf(
                     ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
                     ("FONTSIZE", (0, 0), (-1, -1), 9),
                     ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#dddddd")),
-                    ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#f8f7f3")]),
+                    (
+                        "ROWBACKGROUNDS",
+                        (0, 1),
+                        (-1, -1),
+                        [colors.white, colors.HexColor("#f8f7f3")],
+                    ),
                     ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
                     ("TOPPADDING", (0, 0), (-1, -1), 5),
                 ]

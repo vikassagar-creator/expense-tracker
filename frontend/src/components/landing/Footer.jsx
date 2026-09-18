@@ -4,11 +4,13 @@ import { IoWallet } from "react-icons/io5";
 
 import "./Footer.css";
 
+// Site-wide footer for the landing page (brand blurb + link columns).
+// Only rendered on the public landing page, not inside the logged-in app.
+
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer-container">
-        {/* Brand */}
         <div className="footer-brand">
           <h3>
             <IoWallet className="footer-logo-icon" />
@@ -21,7 +23,6 @@ function Footer() {
           </p>
         </div>
 
-        {/* Product */}
         <div className="footer-column">
           <h4>Product</h4>
 
@@ -34,7 +35,6 @@ function Footer() {
           <a href="#cta">Get Started</a>
         </div>
 
-        {/* Project */}
         <div className="footer-column">
           <h4>Project</h4>
 
@@ -49,7 +49,6 @@ function Footer() {
           </a>
         </div>
 
-        {/* Connect */}
         <div className="footer-column">
           <h4>Connect</h4>
 
@@ -69,7 +68,6 @@ function Footer() {
         </div>
       </div>
 
-      {/* Bottom */}
       <div className="footer-bottom">
         <p>© {new Date().getFullYear()} Expense Tracker</p>
 

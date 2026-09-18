@@ -4,14 +4,21 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..models import Budget, Expense, User
 from ..jwt_handler import get_current_user
+from ..models import Budget, Expense, User
 
 router = APIRouter(prefix="/notifications", tags=["notifications"])
 
 
 @router.get("/")
-def get_notifications(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def get_notifications(
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
+    # NOTE: these alerts are recomputed fresh from Expense/Budget on
+    # every request — there is no Notification table and no persisted
+    # "read" state. The frontend's "mark all as read" (if/when built)
+    # would need to be a client-side concept (e.g. localStorage of
+    # seen alert ids), since the backend has nothing to mark.
     today = date.today()
 
     month_expenses = (
@@ -23,7 +30,8 @@ def get_notifications(db: Session = Depends(get_db), current_user: User = Depend
         .all()
     )
     month_expenses = [
-        e for e in month_expenses
+        e
+        for e in month_expenses
         if e.date.year == today.year and e.date.month == today.month
     ]
 
@@ -43,21 +51,25 @@ def get_notifications(db: Session = Depends(get_db), current_user: User = Depend
             return
         percent = (spent / budget_amount) * 100
         if percent >= 100:
-            alerts.append({
-                "id": f"{scope}-over",
-                "scope": scope,
-                "level": "danger",
-                "percent": round(percent, 1),
-                "message": f"{scope} budget exceeded — {round(percent)}% used ({spent:,.0f} of {budget_amount:,.0f})",
-            })
+            alerts.append(
+                {
+                    "id": f"{scope}-over",
+                    "scope": scope,
+                    "level": "danger",
+                    "percent": round(percent, 1),
+                    "message": f"{scope} budget exceeded — {round(percent)}% used ({spent:,.0f} of {budget_amount:,.0f})",
+                }
+            )
         elif percent >= 90:
-            alerts.append({
-                "id": f"{scope}-warning",
-                "scope": scope,
-                "level": "warning",
-                "percent": round(percent, 1),
-                "message": f"{scope} budget almost reached — {round(percent)}% used",
-            })
+            alerts.append(
+                {
+                    "id": f"{scope}-warning",
+                    "scope": scope,
+                    "level": "warning",
+                    "percent": round(percent, 1),
+                    "message": f"{scope} budget almost reached — {round(percent)}% used",
+                }
+            )
 
     if overall_budget is not None:
         add_alert("Overall", overall_budget, total_spent)

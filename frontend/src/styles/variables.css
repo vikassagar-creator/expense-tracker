@@ -1,7 +1,5 @@
 :root {
-  /* ==============================
-     Colors
-  ============================== */
+  /* Colors */
 
   --primary: #1f4d3a;
   --primary-dark: #16382b;
@@ -11,9 +9,10 @@
   --accent-dark: #bd6043;
 
   --highlight: #e7b86a;
+  --highlight-light: rgba(231, 184, 106, 0.18);
 
   --bg: #f7f4ed;
-  
+
   --surface: #fffdf8;
   --surface-alt: #f1ede4;
 
@@ -24,56 +23,93 @@
 
   --success: #3f7d5c;
   --danger: #c94c4c;
+  --danger-light: #fbeaea;
   --warning: #c58a28;
 
-  /* ==============================
-     Typography
-  ============================== */
+  /* Text/icon color for anything placed on a solid --primary
+     background (buttons, active nav, badges). Same in both themes
+     because --primary stays mid-to-dark enough for white to read. */
+  --text-inverted: #ffffff;
+
+  /* Slightly darker-than-border color for hover states on inputs/cards */
+  --border-hover: #c9c2b5;
+
+  /* Typography */
 
   --font-body: "Inter", sans-serif;
   --font-display: "Playfair Display", serif;
+  --font-ui: "Inter", sans-serif;
 
-  /* ==============================
-     Layout
-  ============================== */
+  /* Type scale — use these instead of one-off rem/px values so every
+     page title, section title, card title, etc. matches across the app */
+  --fs-page-title: 28px;
+  --fw-page-title: 700;
+
+  --fs-section-title: 20px;
+  --fw-section-title: 600;
+
+  --fs-card-title: 16px;
+  --fw-card-title: 600;
+
+  --fs-body: 14px;
+  --fw-body: 400;
+
+  --fs-secondary: 13px;
+  --fw-secondary: 400;
+
+  --fs-table: 14px;
+  --fw-table: 500;
+
+  --fs-button: 14px;
+  --fw-button: 600;
+
+  /* Layout */
 
   --max-width: 1200px;
 
-  /* ==============================
-     Border Radius
-  ============================== */
+  /* Border radius */
 
   --radius-sm: 8px;
   --radius: 10px;
   --radius-lg: 16px;
   --radius-xl: 24px;
 
-  /* ==============================
-     Shadows
-  ============================== */
+  /* Shadows */
 
   --shadow-sm: 0 2px 8px rgba(31, 41, 51, 0.06);
 
-  --shadow-md:
-    0 8px 24px rgba(31, 41, 51, 0.08);
+  --shadow-md: 0 8px 24px rgba(31, 41, 51, 0.08);
 
-  --shadow-lg:
-    0 16px 40px rgba(31, 41, 51, 0.12);
+  --shadow-lg: 0 16px 40px rgba(31, 41, 51, 0.12);
 
-  /* ==============================
-     Transitions
-  ============================== */
+  /* Transitions */
 
   --transition-fast: 0.15s ease;
 
-  --transition:
-    0.25s ease;
+  --transition: 0.25s ease;
+
+  /* Buttons & form controls — shared sizing so every button/input matches */
+
+  --control-height: 42px;
+  --control-radius: var(--radius);
+  --control-padding-x: 16px;
+  --btn-padding-x: 20px;
+
+  /* Spacing */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
 }
 
-/* ==============================
-   Dark theme overrides
-   Applied via [data-theme="dark"] on <html> / <body>
-============================== */
+/* Dark theme overrides — applied via [data-theme="dark"] on <html>/<body> */
 
 [data-theme="dark"] {
   --primary: #3fa679;
@@ -84,6 +120,7 @@
   --accent-dark: #c96f4d;
 
   --highlight: #e7b86a;
+  --highlight-light: rgba(231, 184, 106, 0.18);
 
   --bg: #14181a;
   --surface: #1c2124;
@@ -96,13 +133,15 @@
 
   --success: #4c9d76;
   --danger: #e0645f;
+  --danger-light: rgba(224, 100, 95, 0.16);
   --warning: #d6a13c;
+
+  --text-inverted: #ffffff;
+  --border-hover: #3d474b;
 
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
 
-  --shadow-md:
-    0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
 
-  --shadow-lg:
-    0 16px 40px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
 }

@@ -1,4 +1,15 @@
+/* =========================================================
+   RECENT EXPENSES — DASHBOARD WIDGET
+   All selectors are scoped to .recent-expenses so they
+   cannot interfere with the full Expenses table.
+   ========================================================= */
+
 .recent-expenses {
+  width: 100%;
+  min-width: 0;
+
+  margin-top: var(--space-6);
+
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -8,132 +19,287 @@
   overflow: hidden;
 }
 
+/* ---------------------------------------------------------
+   Header
+   --------------------------------------------------------- */
+
 .recent-expenses-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
 
-  padding: 1.25rem 1.5rem;
+  padding: var(--space-5) var(--space-6);
 
   border-bottom: 1px solid var(--border);
 }
 
 .recent-expenses-header h3 {
   margin: 0;
+
   color: var(--text);
+
+  font-size: var(--fs-section-title);
+  font-weight: var(--fw-section-title);
 }
 
 .recent-expenses-header p {
-  margin: 0.35rem 0 0;
+  margin: var(--space-2) 0 0;
+
   color: var(--muted);
-  font-size: 0.85rem;
+
+  font-size: var(--fs-secondary);
+  line-height: 1.4;
 }
 
-.view-all-btn {
+.recent-expenses .view-all-btn {
+  flex-shrink: 0;
+
   color: var(--primary);
-  text-decoration: none;
+
+  font-size: var(--fs-secondary);
   font-weight: 600;
-  font-size: 0.9rem;
+
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.view-all-btn:hover {
+.recent-expenses .view-all-btn:hover {
   text-decoration: underline;
 }
 
-.expense-table-wrapper {
-  width: 100%;
-  overflow-x: auto;
+.recent-expenses .view-all-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 
-.expense-table {
+/* ---------------------------------------------------------
+   Table wrapper
+   --------------------------------------------------------- */
+
+.recent-expenses .expense-table-wrapper {
   width: 100%;
+
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------------------------------------------------------
+   Table
+   --------------------------------------------------------- */
+
+.recent-expenses .expense-table {
+  width: 100%;
+  min-width: 700px;
+
   border-collapse: collapse;
 }
 
-.expense-table th,
-.expense-table td {
-  padding: 1rem 1.5rem;
+.recent-expenses .expense-table th,
+.recent-expenses .expense-table td {
+  padding: var(--space-4) var(--space-6);
+
   text-align: left;
 
   border-bottom: 1px solid var(--border);
 }
 
-.expense-table th {
+.recent-expenses .expense-table th {
+  background: var(--surface-alt);
+
   color: var(--muted);
-  font-size: 0.75rem;
+
+  font-size: 12px;
+  font-weight: 600;
+
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-.expense-table td {
+.recent-expenses .expense-table td {
   color: var(--text);
-  font-size: 0.9rem;
+
+  font-size: var(--fs-table);
+  vertical-align: middle;
 }
 
-.expense-table tbody tr:last-child td {
-  border-bottom: none;
+.recent-expenses .expense-table tbody tr {
+  transition: background var(--transition-fast);
 }
 
-.expense-table tbody tr:hover {
+.recent-expenses .expense-table tbody tr:hover {
   background: var(--surface-alt);
 }
 
-.category-badge {
-  display: inline-block;
+.recent-expenses .expense-table tbody tr:last-child td {
+  border-bottom: none;
+}
 
-  padding: 0.25rem 0.55rem;
+/* ---------------------------------------------------------
+   Expense title
+   --------------------------------------------------------- */
+
+.recent-expenses .expense-table td strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Category
+   --------------------------------------------------------- */
+
+.recent-expenses .category-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 9px;
 
   border-radius: 999px;
 
-  background: var(--primary-light);
-  color: var(--primary);
-
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
+  line-height: 1.2;
 }
 
-.expense-actions {
+/* ---------------------------------------------------------
+   Payment mode
+   --------------------------------------------------------- */
+
+.recent-expenses .payment-mode-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 9px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  background: var(--bg);
+  color: var(--muted);
+
+  font-size: 12px;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------
+   Amount
+   --------------------------------------------------------- */
+
+.recent-expenses .expense-amount {
+  color: var(--danger);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------
+   Actions
+   --------------------------------------------------------- */
+
+.recent-expenses .expense-actions {
   display: flex;
-  gap: 0.4rem;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-.expense-action {
+.recent-expenses .expense-action {
   width: 32px;
   height: 32px;
 
-  border: none;
-  border-radius: var(--radius-sm);
-
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+
   cursor: pointer;
 
-  transition: var(--transition);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
-.expense-action.edit {
+.recent-expenses .expense-action.edit {
   background: var(--primary-light);
   color: var(--primary);
 }
 
-.expense-action.delete {
-  background: #fff1f2;
-  color: #b91c1c;
-}
-
-.expense-action:hover {
+.recent-expenses .expense-action.edit:hover {
+  background: var(--primary);
+  color: var(--text-inverted);
   transform: translateY(-1px);
 }
 
-.expense-empty {
-  padding: 3rem;
-  text-align: center;
-  color: var(--muted);
+.recent-expenses .expense-action.delete {
+  background: var(--danger-light);
+  color: var(--danger);
 }
 
-.expense-empty a {
-  color: var(--primary);
-  font-weight: 600;
+.recent-expenses .expense-action.delete:hover {
+  background: var(--danger);
+  color: var(--text-inverted);
+  transform: translateY(-1px);
+}
+
+.recent-expenses .expense-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .recent-expenses-header {
+    padding: var(--space-5);
+  }
+
+  .recent-expenses .expense-table th,
+  .recent-expenses .expense-table td {
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .recent-expenses-header {
+    align-items: flex-start;
+    padding: var(--space-4);
+  }
+
+  .recent-expenses-header h3 {
+    font-size: 1rem;
+  }
+
+  .recent-expenses .view-all-btn {
+    font-size: 12px;
+  }
+
+  .recent-expenses .expense-table {
+    min-width: 700px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+  .recent-expenses-header {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .recent-expenses .view-all-btn {
+    align-self: flex-start;
+  }
 }

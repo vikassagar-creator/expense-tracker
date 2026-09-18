@@ -1,0 +1,106 @@
+.empty-state {
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Compact variant, used inside smaller chart cards (see
+   ChartEmptyState.jsx) so it doesn't dominate a 280px chart card
+   the way the full page-level empty state would. */
+.empty-state--compact {
+  min-height: 160px;
+  padding: 1rem;
+}
+
+.empty-state--compact .empty-state-icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 0.6rem;
+}
+
+.empty-state--compact .empty-state-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.empty-state--compact h3 {
+  font-size: 0.92rem;
+}
+
+.empty-state--compact p {
+  font-size: 0.82rem;
+  margin: 0.35rem 0 0.75rem;
+}
+
+.empty-state-icon {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 1rem;
+
+  border-radius: 50%;
+
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.empty-state-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.empty-state h3 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.empty-state p {
+  max-width: 400px;
+
+  margin: 0.5rem 0 1.25rem;
+
+  color: var(--muted);
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.empty-state-action {
+  border: none;
+  border-radius: var(--radius);
+
+  padding: 0.65rem 1rem;
+
+  background: var(--primary);
+  color: var(--text-inverted);
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: var(--transition-fast);
+}
+
+.empty-state-action:hover {
+  background: var(--primary-dark);
+}
+
+.empty-state-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

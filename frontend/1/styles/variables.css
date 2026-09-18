@@ -1,0 +1,163 @@
+:root {
+  /* ==============================
+     Colors
+  ============================== */
+
+  --primary: #1f4d3a;
+  --primary-dark: #16382b;
+  --primary-light: #e8f0eb;
+
+  --accent: #d97757;
+  --accent-dark: #bd6043;
+
+  --highlight: #e7b86a;
+
+  --bg: #f7f4ed;
+
+  --surface: #fffdf8;
+  --surface-alt: #f1ede4;
+
+  --text: #1f2933;
+  --muted: #667085;
+
+  --border: #ded9cf;
+
+  --success: #3f7d5c;
+  --danger: #c94c4c;
+  --warning: #c58a28;
+
+  /* Text/icon color for anything placed on a solid --primary
+     background (buttons, active nav, badges). Same in both themes
+     because --primary stays mid-to-dark enough for white to read. */
+  --text-inverted: #ffffff;
+
+  /* Slightly darker-than-border color for hover states on inputs/cards */
+  --border-hover: #c9c2b5;
+
+  /* ==============================
+     Typography
+  ============================== */
+
+  --font-body: "Inter", sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-ui: "Inter", sans-serif;
+
+  /* Type scale — use these instead of one-off rem/px values so every
+     page title, section title, card title, etc. matches across the app */
+  --fs-page-title: 28px;
+  --fw-page-title: 700;
+
+  --fs-section-title: 20px;
+  --fw-section-title: 600;
+
+  --fs-card-title: 16px;
+  --fw-card-title: 600;
+
+  --fs-body: 14px;
+  --fw-body: 400;
+
+  --fs-secondary: 13px;
+  --fw-secondary: 400;
+
+  --fs-table: 14px;
+  --fw-table: 500;
+
+  --fs-button: 14px;
+  --fw-button: 600;
+
+  /* ==============================
+     Layout
+  ============================== */
+
+  --max-width: 1200px;
+
+  /* ==============================
+     Border Radius
+  ============================== */
+
+  --radius-sm: 8px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* ==============================
+     Shadows
+  ============================== */
+
+  --shadow-sm: 0 2px 8px rgba(31, 41, 51, 0.06);
+
+  --shadow-md: 0 8px 24px rgba(31, 41, 51, 0.08);
+
+  --shadow-lg: 0 16px 40px rgba(31, 41, 51, 0.12);
+
+  /* ==============================
+     Transitions
+  ============================== */
+
+  --transition-fast: 0.15s ease;
+
+  --transition: 0.25s ease;
+
+  /* ==============================
+     Buttons & form controls
+     (shared sizing so every button/input matches)
+  ============================== */
+
+  --control-height: 42px;
+  --control-radius: var(--radius);
+  --control-padding-x: 16px;
+  --btn-padding-x: 20px;
+
+  /* ==============================
+     Spacing
+     ============================ */
+
+       --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+}
+
+/* ==============================
+   Dark theme overrides
+   Applied via [data-theme="dark"] on <html> / <body>
+============================== */
+
+[data-theme="dark"] {
+  --primary: #3fa679;
+  --primary-dark: #2f7d5c;
+  --primary-light: rgba(63, 166, 121, 0.16);
+
+  --accent: #e08a67;
+  --accent-dark: #c96f4d;
+
+  --highlight: #e7b86a;
+
+  --bg: #14181a;
+  --surface: #1c2124;
+  --surface-alt: #242a2d;
+
+  --text: #eef1f0;
+  --muted: #98a3a0;
+
+  --border: #313a3d;
+
+  --success: #4c9d76;
+  --danger: #e0645f;
+  --warning: #d6a13c;
+
+  --text-inverted: #ffffff;
+  --border-hover: #3d474b;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+}

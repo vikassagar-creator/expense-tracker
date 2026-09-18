@@ -6,11 +6,18 @@ import {
   FaFilm,
   FaShoppingBag,
   FaEllipsisH,
+  FaTags,
+  FaFolder,
 } from "react-icons/fa";
 
 import "./Categories.css";
 import formatCurrency from "../utils/formatCurrency";
+import EmptyState from "../components/common/EmptyState";
+import ErrorState from "../components/common/ErrorState";
+import axiosClient from "../services/axiosClient";
 
+// Category breakdown view. CATEGORY_META pairs each known category
+// with an icon + color; CATEGORY_ORDER controls display order.
 const CATEGORY_META = {
   Food: { icon: FaUtensils, color: "#1f4d3a" },
   Transport: { icon: FaCar, color: "#d97757" },
@@ -19,38 +26,38 @@ const CATEGORY_META = {
   Other: { icon: FaEllipsisH, color: "#8c9a8b" },
 };
 
-const CATEGORY_ORDER = ["Food", "Transport", "Entertainment", "Shopping", "Other"];
+const CATEGORY_ORDER = [
+  "Food",
+  "Transport",
+  "Entertainment",
+  "Shopping",
+  "Other",
+];
 
 function Categories() {
-  const API_URL = import.meta.env.VITE_API_URL;
 
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const fetchAnalytics = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const response = await axiosClient.get("/expenses/analytics");
+      setAnalytics(response.data);
+    } catch (error) {
+      console.error("Error fetching category analytics:", error);
+      toast.error("Could not load categories");
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchAnalytics = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${API_URL}/expenses/analytics`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to load categories");
-        }
-
-        const data = await response.json();
-        setAnalytics(data);
-      } catch (error) {
-        console.error("Error fetching category analytics:", error);
-        toast.error("Could not load categories");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchAnalytics();
-  }, [API_URL]);
+  }, []);
 
   const breakdown = analytics?.category_breakdown || {};
   const total = analytics?.total || 0;
@@ -72,21 +79,29 @@ function Categories() {
 
   return (
     <div className="categories-page">
-      <div className="categories-header">
-        <h1>Categories</h1>
-        <p>See how your spending breaks down by category.</p>
-      </div>
-
+      {/* TopBar (via PageConfig) already renders "Categories" + subtitle for this route. */}
       {loading ? (
         <div className="categories-empty">Loading categories...</div>
+      ) : error ? (
+        <ErrorState
+          message="We couldn't load your categories."
+          onRetry={fetchAnalytics}
+        />
       ) : !hasSpending ? (
         <div className="categories-empty">
-          No expenses yet — add some expenses to see your category breakdown here.
+          <EmptyState
+            icon={<FaFolder />}
+            title="No categories yet"
+            message="Each expense you add finds its slice here."
+          />
         </div>
       ) : (
         <div className="categories-list">
           {rows.map(({ name, amount }) => {
-            const meta = CATEGORY_META[name] || { icon: FaEllipsisH, color: "#8c9a8b" };
+            const meta = CATEGORY_META[name] || {
+              icon: FaEllipsisH,
+              color: "#8c9a8b",
+            };
             const Icon = meta.icon;
             const pct = total > 0 ? (amount / total) * 100 : 0;
 
@@ -102,7 +117,9 @@ function Categories() {
                 <div className="category-info">
                   <div className="category-info-top">
                     <span className="category-name">{name}</span>
-                    <span className="category-amount">{formatCurrency(amount)}</span>
+                    <span className="category-amount">
+                      {formatCurrency(amount)}
+                    </span>
                   </div>
 
                   <div className="category-bar-track">
@@ -112,7 +129,9 @@ function Categories() {
                     />
                   </div>
 
-                  <span className="category-pct">{pct.toFixed(1)}% of total</span>
+                  <span className="category-pct">
+                    {pct.toFixed(1)}% of total
+                  </span>
                 </div>
               </div>
             );

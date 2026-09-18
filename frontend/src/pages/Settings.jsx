@@ -2,17 +2,15 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import "./Settings.css";
 import { useTheme } from "../context/ThemeContext";
 
+// Account preferences page. Currently just the light/dark theme
+// toggle, backed by ThemeContext (persists to localStorage).
 function Settings() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
 
   return (
     <div className="settings-page">
-      <div className="settings-header">
-        <h1>Settings</h1>
-        <p>Manage your account preferences.</p>
-      </div>
-
+      {/* TopBar (via PageConfig) already renders "Settings" + subtitle for this route. */}
       <div className="settings-card">
         <h2 className="settings-section-title">Preferences</h2>
 
@@ -35,7 +33,9 @@ function Settings() {
             <span className="theme-toggle-icon theme-toggle-icon--sun">
               <FaSun />
             </span>
-            <span className={`theme-toggle-track ${isDark ? "theme-toggle-track--dark" : ""}`}>
+            <span
+              className={`theme-toggle-track ${isDark ? "theme-toggle-track--dark" : ""}`}
+            >
               <span className="theme-toggle-thumb" />
             </span>
             <span className="theme-toggle-icon theme-toggle-icon--moon">

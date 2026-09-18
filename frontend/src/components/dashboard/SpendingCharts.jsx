@@ -1,163 +1,179 @@
+import { Link } from "react-router-dom";
 import {
-    PieChart,
-    Pie,
-    Cell,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
-    BarChart,
-    Bar,
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid
+  CartesianGrid,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
 
-import "./SpendingCharts.css";
-
-const COLORS = [
-    "#1f4d3a",
-    "#d97757",
-    "#e7b86a",
-    "#6b8f71",
-    "#8c9a8b",
-];
 import formatCurrency from "../../utils/formatCurrency";
+import "./SpendingCharts.css";
+import ChartEmptyState from "../common/ChartEmptyState";
+import {
+  LuChartNoAxesColumn,
+  LuReceipt,
+} from "react-icons/lu";
 
-function SpendingCharts({ chartData, trendData = [] }) {
+const COLORS = ["#1f4d3a", "#d97757", "#e7b86a", "#6b8f71", "#8c9a8b"];
 
-    
+// Dashboard's two charts: category donut (from `chartData`, already
+// shaped by Dashboard.jsx) and the 6-month spending trend line
+// (`trendData`, straight from the analytics API response).
+// `onAddExpense` opens Dashboard's Add Expense modal from either
+// chart's empty state.
+function SpendingCharts({ chartData, trendData = [], onAddExpense }) {
+  const totalSpending = (chartData || []).reduce(
+    (total, item) => total + Number(item.value || 0),
+    0,
+  );
 
-    return (
-        <div className="dashboard-charts-wrap">
-        <div className="dashboard-charts">
-            {/* BAR CHART */}
+  const hasTrendData = (trendData || []).some(
+  (item) => Number(item.total || 0) > 0,
+);
 
-            <div className="dashbord-card">
-                <div className="card-header">
-                    <div>
-                    <h3>Spending overview</h3>
-                    <p>Your spending by category.</p>
-
-                </div>
-            </div>
-
-            <div className="chart-container">
-
-                <ResponsiveContainer width="100%" height={280}>
-                    <BarChart data={chartData}>
-
-                        <CartesianGrid strokeDasharray="3 3" />
-
-                        <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-
-                        <YAxis />
-
-                        <Tooltip formatter={(value) => formatCurrency(value)} />
-
-                        <Bar
-                            dataKey="value"
-                            radius={[6, 6, 0, 0]}
-                        >
-                            {chartData.map((entry, index) => (
-                                <Cell
-                                    key={`cell-${index}`}
-                                    fill={COLORS[index % COLORS.length]}
-                                />
-                            ))}</Bar>
-
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
-
-        </div>
-
-            {/* PIE CHART*/ }
-
-    <div className="dashboard-card">
-
-        <div className="card-header">
+  return (
+    <div className="dashboard-charts-wrap">
+      <div className="dashboard-charts">
+        <div className="dashboard-card">
+          <div className="card-header">
             <div>
-                <h3>Expense Distribution</h3>
-                <p>See how your spending is distributed.</p>
+              <h3>Expense Distribution</h3>
+              <p>See how your spending is distributed.</p>
             </div>
-        </div>
 
-        <div className="chart-container">
+            <Link to="/analytics" className="view-analytics-link">
+              View Analytics
+            </Link>
+          </div>
 
-            <ResponsiveContainer width="100%" height={280}>
-                <PieChart>
-                    <Pie
-                        data={chartData}
+          <div className="chart-container">
+            {chartData?.length > 0 ? (
+              <div className="donut-chart-layout">
+                <div className="donut-chart">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={chartData.map((entry, index) => ({
+                          ...entry,
+                          fill: COLORS[index % COLORS.length],
+                        }))}
                         dataKey="value"
                         nameKey="name"
                         cx="50%"
                         cy="50%"
-                        innerRadius={50}
-                        outerRadius={90}
-                        label={({ value }) => formatCurrency(value)}
-                    >
-                        {chartData.map((entry, index) => (
-                            <Cell
-                                key={`cell-${index}`}
-                                fill={COLORS
-                                [index % COLORS.length]}
-                            />
-                        ))}
-                    </Pie>
+                        innerRadius={65}
+                        outerRadius={95}
+                        paddingAngle={2}
+                      />
 
-                    <Tooltip />
-                    <Legend />
-                </PieChart>
-            </ResponsiveContainer>
+                      <Tooltip formatter={(value) => formatCurrency(value)} />
+                    </PieChart>
+                  </ResponsiveContainer>
+
+                  <div className="donut-center">
+                    <span className="donut-center-label">This Month</span>
+
+                    <span className="donut-center-value">
+                      {formatCurrency(totalSpending)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="spending-legend">
+                  {chartData.map((entry, index) => {
+                    const percentage =
+                      totalSpending > 0
+                        ? (Number(entry.value) / totalSpending) * 100
+                        : 0;
+
+                    return (
+                      <div
+                        className="spending-legend-item"
+                        key={`${entry.name}-${index}`}
+                      >
+                        <span
+                          className="spending-legend-dot"
+                          style={{
+                            backgroundColor: COLORS[index % COLORS.length],
+                          }}
+                        />
+
+                        <div className="spending-legend-info">
+                          <span className="spending-legend-name">
+                            {entry.name}
+                          </span>
+
+                          <span className="spending-legend-value">
+                            {percentage.toFixed(1)}% •{" "}
+                            {formatCurrency(entry.value)}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <ChartEmptyState
+                icon={<LuChartNoAxesColumn />}
+                title="Nothing to divide up yet."
+                message="Add an expense and fills in by category"
+                actionLabel="Add Expense"
+                onAction={onAddExpense}
+              />
+            )}
+          </div>
         </div>
 
-    </div>
-
-    </div>
-
-    {/* MONTHLY SPENDING TREND */}
-
-    <div className="dashboard-card dashboard-card--trend">
-
-        <div className="card-header">
+        <div className="dashboard-card">
+          <div className="card-header">
             <div>
-                <h3>Monthly Spending Trend</h3>
-                <p>Your total spending over the last 6 months.</p>
+              <h3>Monthly Spending Trend</h3>
+              <p>Your total spending over the last 6 months.</p>
             </div>
-        </div>
+          </div>
 
-        <div className="chart-container">
-
-            <ResponsiveContainer width="100%" height={260}>
+          <div className="chart-container">
+            {!hasTrendData ? (
+              <ChartEmptyState
+                icon={<LuReceipt />}
+                title="No trend chart yet"
+                message="Track a few expenses and the line starts moving."
+                actionLabel="Add Expense"
+                onAction={onAddExpense}
+              />
+            ) : (
+              <ResponsiveContainer width="100%" height={260}>
                 <LineChart data={trendData}>
+                  <CartesianGrid strokeDasharray="3 3" />
 
-                    <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" tick={{ fontSize: 11 }} />
 
-                    <XAxis dataKey="month" tick={{ fontSize: 11 }} />
+                  <YAxis />
 
-                    <YAxis />
+                  <Tooltip formatter={(value) => formatCurrency(value)} />
 
-                    <Tooltip formatter={(value) => formatCurrency(value)} />
-
-                    <Line
-                        type="monotone"
-                        dataKey="total"
-                        stroke={COLORS[0]}
-                        strokeWidth={2.5}
-                        dot={{ r: 4 }}
-                        activeDot={{ r: 6 }}
-                    />
-
+                  <Line
+                    type="monotone"
+                    dataKey="total"
+                    stroke={COLORS[0]}
+                    strokeWidth={2.5}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
                 </LineChart>
-            </ResponsiveContainer>
+              </ResponsiveContainer>
+            )}
+          </div>
         </div>
-
+      </div>
     </div>
-
-    </div>
-            );
+  );
 }
 
 export default SpendingCharts;

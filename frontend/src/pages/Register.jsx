@@ -4,7 +4,11 @@ import "./Auth.css";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { registerUser } from "../services/api";
+import { isPasswordValid } from "../utils/passwordRules";
 
+// Registration form. Validates password match + complexity (shared
+// rules from utils/passwordRules.js) before calling the register API,
+// then redirects to Login on success.
 function Register() {
   const navigation = useNavigate();
   const [username, setUsername] = useState("");
@@ -20,28 +24,31 @@ function Register() {
       toast.error("Passwords do not match!");
       return;
     }
+
+    if (!isPasswordValid(password)) {
+      toast.error(
+        "Password must be 8+ characters with uppercase, lowercase, a number, and a special character.",
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       await registerUser(username, email, password);
       toast.success("Registration successful!", {
         className: "success-toast",
       });
-      //clear form fields
       setUsername("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
       navigation("/login");
-    }
-    catch (error) {
+    } catch (error) {
       toast.error("Registration failed: " + error.message);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
-  }
-
-
+  };
 
   return (
     <div className="auth-page">
@@ -52,7 +59,9 @@ function Register() {
       <div className="auth-container">
         <form onSubmit={handleSubmit}>
           <h4>Create your account</h4>
-          <p className="auth-subtext">Start tracking your expenses in minutes.</p>
+          <p className="auth-subtext">
+            Start tracking your expenses in minutes.
+          </p>
 
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -66,9 +75,7 @@ function Register() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="email">
-              Email address
-            </label>
+            <label htmlFor="email">Email address</label>
             <input
               type="email"
               id="email"
@@ -79,13 +86,10 @@ function Register() {
             <span id="emailHelp" className="form-hint">
               We'll never share your email with anyone else.
             </span>
-
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">
-              Password
-            </label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
@@ -96,9 +100,7 @@ function Register() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="confirmpassword">
-              Confirm Password
-            </label>
+            <label htmlFor="confirmpassword">Confirm Password</label>
             <input
               type="password"
               id="confirmpassword"
@@ -110,7 +112,6 @@ function Register() {
 
           <button type="submit" className="btn-auth" disabled={loading}>
             {loading ? "Creating account..." : "Creating Account"}
-            
           </button>
 
           <p className="auth-switch">

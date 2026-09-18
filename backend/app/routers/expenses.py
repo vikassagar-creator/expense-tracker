@@ -1,32 +1,46 @@
-from datetime import date
 from calendar import month_abbr
+from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..database import get_db
+from ..jwt_handler import get_current_user
 from ..models import Expense, User
 from ..schemas import ExpenseCreate
-from ..jwt_handler import get_current_user
 
 router = APIRouter()
 
+# CRUD for expenses, plus /expenses/analytics which computes
+# category totals and a 6-month trend from live data (not cached/
+# pre-aggregated) — fine at this data volume, worth revisiting if
+# a user's expense count grows very large.
+
+
 @router.post("/expenses/")
-def create_expense(expense: ExpenseCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def create_expense(
+    expense: ExpenseCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     db_expense = Expense(**expense.model_dump(), user_id=current_user.id)
     db.add(db_expense)
     db.commit()
     db.refresh(db_expense)
     return db_expense
 
+
 @router.get("/expenses/")
-def get_expenses(db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):
+def get_expenses(
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
     return db.query(Expense).filter(Expense.user_id == current_user.id).all()
 
 
-
 @router.get("/expenses/analytics")
-def get_analytics(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def get_analytics(
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
     expenses = db.query(Expense).filter(Expense.user_id == current_user.id).all()
 
     total = sum(e.amount for e in expenses)
@@ -37,7 +51,8 @@ def get_analytics(db: Session = Depends(get_db), current_user: User = Depends(ge
 
     today = date.today()
     this_month_total = sum(
-        e.amount for e in expenses
+        e.amount
+        for e in expenses
         if e.date.year == today.year and e.date.month == today.month
     )
 
@@ -68,21 +83,37 @@ def get_analytics(db: Session = Depends(get_db), current_user: User = Depends(ge
         "total": total,
         "this_month": this_month_total,
         "category_breakdown": category_data,
-        "monthly_trend": monthly_trend
+        "monthly_trend": monthly_trend,
     }
 
 
-
 @router.get("/expenses/{expense_id}")
-def get_expense(expense_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    expense = db.query(Expense).filter(Expense.id == expense_id, Expense.user_id == current_user.id).first()
+def get_expense(
+    expense_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    expense = (
+        db.query(Expense)
+        .filter(Expense.id == expense_id, Expense.user_id == current_user.id)
+        .first()
+    )
     if expense is None:
         raise HTTPException(status_code=404, detail="Expense not found")
     return expense
 
+
 @router.delete("/expenses/{expense_id}")
-def delete_expense(expense_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    expense = db.query(Expense).filter(Expense.id == expense_id, Expense.user_id == current_user.id).first()
+def delete_expense(
+    expense_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    expense = (
+        db.query(Expense)
+        .filter(Expense.id == expense_id, Expense.user_id == current_user.id)
+        .first()
+    )
     if expense is None:
         raise HTTPException(status_code=404, detail="Expense not found")
     db.delete(expense)
@@ -90,19 +121,24 @@ def delete_expense(expense_id: int, db: Session = Depends(get_db), current_user:
     return {"message": "Expense deleted successfully"}
 
 
-
 @router.put("/expenses/{expense_id}")
-def update_expense(expense_id: int, updated_expense: ExpenseCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    expense = db.query(Expense).filter(Expense.id == expense_id, Expense.user_id == current_user.id).first()
+def update_expense(
+    expense_id: int,
+    updated_expense: ExpenseCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    expense = (
+        db.query(Expense)
+        .filter(Expense.id == expense_id, Expense.user_id == current_user.id)
+        .first()
+    )
     if expense is None:
         raise HTTPException(status_code=404, detail="Expense not found")
-    
+
     for key, value in updated_expense.model_dump().items():
         setattr(expense, key, value)
-    
+
     db.commit()
     db.refresh(expense)
     return expense
-
-
-

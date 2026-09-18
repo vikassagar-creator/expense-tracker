@@ -1,0 +1,63 @@
+/* ==============================================================
+   Form controls — Phase 5.1 foundation
+
+   Shared height/padding/radius/focus treatment for text inputs
+   and selects. This is what fixes the dark-mode visibility issue:
+   every focus ring below uses var(--primary-light), which is
+   theme-aware, instead of a hardcoded light-theme rgba value.
+================================================================= */
+
+.input,
+.select,
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  height: var(--control-height);
+  padding: 0 var(--control-padding-x);
+
+  border: 1px solid var(--border);
+  border-radius: var(--control-radius);
+
+  background: var(--surface);
+  color: var(--text);
+
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.form-group textarea {
+  height: auto;
+  min-height: 96px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  resize: vertical;
+}
+
+.input:hover,
+.select:hover,
+.form-group input:hover,
+.form-group select:hover {
+  border-color: var(--border-hover);
+}
+
+.input:focus,
+.select:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.input::placeholder,
+.form-group input::placeholder {
+  color: var(--muted);
+}

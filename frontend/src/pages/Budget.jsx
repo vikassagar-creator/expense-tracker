@@ -4,15 +4,18 @@ import { FaCheck, FaPen } from "react-icons/fa";
 
 import "./Budget.css";
 import formatCurrency from "../utils/formatCurrency";
+import { CATEGORIES } from "../constants/categories";
+import ErrorState from "../components/common/ErrorState";
+import axiosClient from "../services/axiosClient";
 
-const CATEGORIES = ["Food", "Transport", "Entertainment", "Shopping", "Other"];
-
+// Budget page: an overall monthly budget plus one budget per category.
+// Both share the same edit-inline pattern (click "Edit", type an
+// amount, save) — see handleSaveOverall/handleSaveCategory below.
 function Budget() {
-  const API_URL = import.meta.env.VITE_API_URL;
-  const token = localStorage.getItem("token");
 
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const [editingOverall, setEditingOverall] = useState(false);
   const [overallInput, setOverallInput] = useState("");
@@ -22,17 +25,19 @@ function Budget() {
   const [categoryInput, setCategoryInput] = useState("");
   const [savingCategory, setSavingCategory] = useState(false);
 
+  // =========================
+  // FETCH BUDGET SUMMARY
+  // =========================
   const fetchSummary = async () => {
+    setLoading(true);
+    setError(false);
+
     try {
-      const response = await fetch(`${API_URL}/budgets/summary`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!response.ok) throw new Error("Failed to load budget");
-      const data = await response.json();
-      setSummary(data);
+      const response = await axiosClient.get("/budgets/summary");
+      setSummary(response.data);
     } catch (error) {
-      console.error("Error fetching budget summary:", error);
-      toast.error("Could not load budget");
+      console.error("Error fetching budget:", error);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -43,18 +48,17 @@ function Budget() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // =========================
+  // SAVE BUDGET (shared by overall + per-category forms below)
+  // `category` is null for the overall monthly budget.
+  // =========================
   const saveBudget = async (category, amount) => {
-    const response = await fetch(`${API_URL}/budgets/`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ category, amount }),
-    });
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      throw new Error(err.detail || "Failed to save budget");
+    try {
+      await axiosClient.put("/budgets/", { category, amount });
+    } catch (err) {
+      throw new Error(
+        err.response?.data?.detail || "Failed to save budget",
+      );
     }
   };
 
@@ -99,18 +103,20 @@ function Budget() {
   const overall = summary?.overall;
   const categoryBudgets = summary?.categories || [];
   const categoryBudgetMap = Object.fromEntries(
-    categoryBudgets.map((c) => [c.category, c])
+    categoryBudgets.map((c) => [c.category, c]),
   );
 
   return (
     <div className="budget-page">
-      <div className="budget-header">
-        <h1>Budget</h1>
-        <p>Set spending limits and track how you're doing this month.</p>
-      </div>
-
+      {/* TopBar (via PageConfig) already renders "Budget" + subtitle
+          for this route — removed the duplicate inline header here. */}
       {loading ? (
         <div className="budget-empty">Loading budget...</div>
+      ) : error ? (
+        <ErrorState
+          message="We couldn't load your budget."
+          onRetry={fetchSummary}
+        />
       ) : (
         <>
           <div className="budget-overall-card">
@@ -161,11 +167,15 @@ function Budget() {
               <>
                 <div className="budget-overall-figures">
                   <div>
-                    <span className="budget-figure-value">{formatCurrency(overall.budget)}</span>
+                    <span className="budget-figure-value">
+                      {formatCurrency(overall.budget)}
+                    </span>
                   </div>
                   <div className="budget-overall-sub">
                     <span>Spent: {formatCurrency(overall.spent)}</span>
-                    <span className={overall.remaining < 0 ? "budget-negative" : ""}>
+                    <span
+                      className={overall.remaining < 0 ? "budget-negative" : ""}
+                    >
                       Remaining: {formatCurrency(overall.remaining)}
                     </span>
                   </div>
@@ -239,8 +249,15 @@ function Budget() {
                   ) : data ? (
                     <>
                       <div className="budget-category-sub">
-                        <span>{formatCurrency(data.spent)} / {formatCurrency(data.budget)}</span>
-                        <span className={data.remaining < 0 ? "budget-negative" : ""}>
+                        <span>
+                          {formatCurrency(data.spent)} /{" "}
+                          {formatCurrency(data.budget)}
+                        </span>
+                        <span
+                          className={
+                            data.remaining < 0 ? "budget-negative" : ""
+                          }
+                        >
                           {data.remaining < 0
                             ? `${formatCurrency(Math.abs(data.remaining))} over`
                             : `${formatCurrency(data.remaining)} left`}
@@ -254,7 +271,9 @@ function Budget() {
                       </div>
                     </>
                   ) : (
-                    <p className="budget-not-set">No budget set for this category.</p>
+                    <p className="budget-not-set">
+                      No budget set for this category.
+                    </p>
                   )}
                 </div>
               );

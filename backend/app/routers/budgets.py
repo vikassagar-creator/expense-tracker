@@ -4,15 +4,25 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..database import get_db
+from ..jwt_handler import get_current_user
 from ..models import Budget, Expense, User
 from ..schemas import BudgetSet
-from ..jwt_handler import get_current_user
 
 router = APIRouter(prefix="/budgets", tags=["budgets"])
 
+# NOTE: DELETE /budgets/{category} and DELETE /budgets/ (below) exist
+# here but Budget.jsx's UI has no "remove budget" action that calls
+# them — only set/edit. Either dead API surface, or a missing frontend
+# feature, depending on intent.
+
 
 @router.get("/summary")
-def get_budget_summary(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def get_budget_summary(
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
+    # Powers SummaryCards + Budget.jsx on the frontend: overall budget
+    # progress plus a per-category breakdown, all scoped to the
+    # current calendar month.
     today = date.today()
 
     # This month's expenses only — budgets are tracked monthly.
@@ -25,7 +35,8 @@ def get_budget_summary(db: Session = Depends(get_db), current_user: User = Depen
         .all()
     )
     month_expenses = [
-        e for e in month_expenses
+        e
+        for e in month_expenses
         if e.date.year == today.year and e.date.month == today.month
     ]
 
@@ -45,19 +56,27 @@ def get_budget_summary(db: Session = Depends(get_db), current_user: User = Depen
             "budget": overall_budget,
             "spent": total_spent,
             "remaining": remaining,
-            "percent": round((total_spent / overall_budget) * 100, 1) if overall_budget > 0 else 0,
+            "percent": (
+                round((total_spent / overall_budget) * 100, 1)
+                if overall_budget > 0
+                else 0
+            ),
         }
 
     categories = []
     for category, budget_amount in category_budgets.items():
         spent = spent_by_category.get(category, 0)
-        categories.append({
-            "category": category,
-            "budget": budget_amount,
-            "spent": spent,
-            "remaining": budget_amount - spent,
-            "percent": round((spent / budget_amount) * 100, 1) if budget_amount > 0 else 0,
-        })
+        categories.append(
+            {
+                "category": category,
+                "budget": budget_amount,
+                "spent": spent,
+                "remaining": budget_amount - spent,
+                "percent": (
+                    round((spent / budget_amount) * 100, 1) if budget_amount > 0 else 0
+                ),
+            }
+        )
 
     return {
         "overall": overall,
@@ -67,8 +86,12 @@ def get_budget_summary(db: Session = Depends(get_db), current_user: User = Depen
 
 
 @router.put("/")
-def set_budget(payload: BudgetSet, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    if payload.amount < 0:
+def set_budget(
+    payload: BudgetSet,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if payload.amount <= 0:
         raise HTTPException(status_code=400, detail="Budget amount must be positive")
 
     existing = (
@@ -93,7 +116,11 @@ def set_budget(payload: BudgetSet, db: Session = Depends(get_db), current_user: 
 
 
 @router.delete("/{category}")
-def delete_category_budget(category: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def delete_category_budget(
+    category: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     budget = (
         db.query(Budget)
         .filter(Budget.user_id == current_user.id, Budget.category == category)
@@ -107,7 +134,9 @@ def delete_category_budget(category: str, db: Session = Depends(get_db), current
 
 
 @router.delete("/")
-def delete_overall_budget(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+def delete_overall_budget(
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
     budget = (
         db.query(Budget)
         .filter(Budget.user_id == current_user.id, Budget.category.is_(None))

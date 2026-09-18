@@ -1,6 +1,7 @@
 from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 
+
 class Settings(BaseSettings):
     DATABASE_URL: str
     SECRET_KEY: str
@@ -9,6 +10,7 @@ class Settings(BaseSettings):
 
     model_config = ConfigDict(env_file=".env", env_file_encoding="utf-8")
 
-    # Single shared instance — every module should import `settings` from here
-# instead of reading environment variables directly.
+
+# Single shared instance — every module should import `settings` from
+# here instead of reading environment variables directly.
 settings = Settings()

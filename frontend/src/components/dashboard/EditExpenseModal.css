@@ -19,7 +19,8 @@
 
   background: var(--surface);
 
-  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 
   box-shadow: var(--shadow-lg);
 
@@ -39,6 +40,7 @@
 .edit-modal-header h2 {
   margin: 0;
   color: var(--text);
+  font-size: 1.35rem;
 }
 
 .edit-modal-header p {
@@ -90,27 +92,28 @@
   font-weight: 600;
 }
 
-.edit-expense-form input {
+.edit-expense-form input,
+.edit-expense-form select {
   width: 100%;
+  box-sizing: border-box;
 
-  padding: 0.7rem 0.8rem;
+  height: var(--control-height);
+  padding: 0 var(--control-padding-x);
 
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--control-radius);
 
-  background: white;
-
+  background: var(--surface);
   color: var(--text);
+  font-size: var(--fs-body);
 
   outline: none;
 }
 
-.edit-expense-form input:focus {
+.edit-expense-form input:focus,
+.edit-expense-form select:focus {
   border-color: var(--primary);
-
-  box-shadow:
-    0 0 0 3px
-    rgba(31, 77, 58, 0.1);
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .modal-actions {
@@ -124,11 +127,14 @@
 
 .cancel-btn,
 .save-btn {
-  padding: 0.7rem 1rem;
+  box-sizing: border-box;
+  height: var(--control-height);
+  padding: 0 var(--btn-padding-x);
 
-  border-radius: var(--radius);
+  border-radius: var(--control-radius);
 
-  font-weight: 600;
+  font-size: var(--fs-button);
+  font-weight: var(--fw-button);
 
   cursor: pointer;
 }
@@ -146,9 +152,41 @@
 
   border: 1px solid var(--primary);
 
-  color: white;
+  color: var(--text-inverted);
 }
 
 .save-btn:hover {
   background: var(--primary-dark);
+}
+
+@media (max-width: 600px) {
+  .edit-modal-overlay {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: var(--space-4);
+  }
+
+  .edit-modal {
+    margin: auto 0;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .edit-modal {
+    border-radius: var(--radius);
+  }
+
+  .edit-modal-header {
+    padding: var(--space-4);
+  }
+
+  .edit-expense-form {
+    padding: var(--space-4);
+  }
+
+  .edit-modal-header h2 {
+    font-size: 1.2rem;
+  }
 }

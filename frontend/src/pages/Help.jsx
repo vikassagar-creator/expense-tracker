@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import "./Help.css";
 
+// Static FAQ list — add/remove/reorder questions by editing this
+// array; the accordion UI below handles everything automatically.
 const FAQS = [
   {
     q: "How do I add a new expense?",
@@ -38,17 +40,19 @@ function Help() {
 
   return (
     <div className="help-page">
-      <div className="help-header">
-        <h1>Help</h1>
-        <p>Answers to common questions about using the app.</p>
-      </div>
-
+      {/* TopBar (via PageConfig) already renders "Help" + subtitle for this route. */}
       <div className="help-faq-list">
         {FAQS.map((item, index) => {
           const isOpen = openIndex === index;
           return (
-            <div className={`help-faq-item ${isOpen ? "help-faq-item--open" : ""}`} key={item.q}>
-              <button className="help-faq-question" onClick={() => toggle(index)}>
+            <div
+              className={`help-faq-item ${isOpen ? "help-faq-item--open" : ""}`}
+              key={item.q}
+            >
+              <button
+                className="help-faq-question"
+                onClick={() => toggle(index)}
+              >
                 <span>{item.q}</span>
                 <FaChevronDown className="help-faq-icon" />
               </button>
@@ -62,8 +66,9 @@ function Help() {
       <div className="help-contact-card">
         <h3>Still need help?</h3>
         <p>Reach out and we'll get back to you as soon as we can.</p>
-        <a className="help-contact-link" href="mailto:support@example.com">
-          support@example.com
+        
+        <a className="help-contact-link" href="mailto:bvikassagar@gmail.com">
+          bvikassagar@gmail.com
         </a>
       </div>
     </div>
