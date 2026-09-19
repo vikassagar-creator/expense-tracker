@@ -9,7 +9,7 @@
 
   width: 100%;
 
-  background: rgba(255, 253, 248, 0.94);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
 
   border-bottom: 1px solid var(--border);
 
@@ -73,7 +73,7 @@
   place-items: center;
 
   background: var(--primary);
-  color: white;
+  color: var(--text-inverted);
 
   border-radius: 10px;
 
@@ -163,7 +163,7 @@
   padding: 0.65rem 1.15rem;
 
   background: var(--primary);
-  color: #ffffff;
+  color: var(--text-inverted);
 
   border: 1px solid var(--primary);
 
@@ -185,7 +185,7 @@
   background: var(--primary-dark);
   border-color: var(--primary-dark);
 
-  color: #ffffff;
+  color: var(--text-inverted);
 
   transform: translateY(-2px);
 
