@@ -11,12 +11,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    # NOTE: allow_origins=["*"] combined with allow_credentials=True is
-    # invalid per the CORS spec — browsers reject wildcard origins when
-    # credentials are allowed, so credentialed cross-origin requests may
-    # silently fail. Replace "*" with your actual frontend origin(s)
-    # (e.g. ["http://localhost:5173"]) if credentials are needed.
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://expense-tracker-frontend-4n7d.onrender.com",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
