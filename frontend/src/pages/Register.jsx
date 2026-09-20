@@ -111,7 +111,7 @@ function Register() {
           </div>
 
           <button type="submit" className="btn-auth" disabled={loading}>
-            {loading ? "Creating account..." : "Creating Account"}
+            {loading ? "Creating account..." : "Create Account"}
           </button>
 
           <p className="auth-switch">

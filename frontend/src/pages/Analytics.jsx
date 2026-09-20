@@ -39,8 +39,12 @@ function Analytics() {
   setError(false);
 
   try {
-    const response = await axiosClient.get("/expenses/analytics");
-    setAnalytics(response.data);
+    const [expensesRes, analyticsRes] = await Promise.all([
+      axiosClient.get("/expenses/"),
+      axiosClient.get("/expenses/analytics"),
+    ]);
+    setExpenses(expensesRes.data);
+    setAnalytics(analyticsRes.data);
   } catch (error) {
     console.error("Error fetching analytics:", error);
     setError(true);
